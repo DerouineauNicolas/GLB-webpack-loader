@@ -1,5 +1,9 @@
-1, install dep with npm install --save
 
-2, add import and code and index.js
+Threejs webpack template
 
-3, run npx webpack
+
+INSTALLATION
+-------------------
+```
+    npm install
+```

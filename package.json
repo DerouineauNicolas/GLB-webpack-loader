@@ -1,0 +1,28 @@
+{
+  "name": "webpacktemplate",
+  "version": "1.0.0",
+  "description": "1, install dep with npm install --save",
+  "main": "webpack.config.js",
+  "dependencies": {},
+  "devDependencies": {
+    "gltf-webpack-loader": "^1.0.6",
+    "three": "^0.108.0",
+    "three-gltf-loader": "^1.108.0",
+    "three-orbitcontrols": "^2.108.1",
+    "webpack": "^4.40.2",
+    "webpack-cli": "^3.3.9"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DerouineauNicolas/webpacktemplate.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DerouineauNicolas/webpacktemplate/issues"
+  },
+  "homepage": "https://github.com/DerouineauNicolas/webpacktemplate#readme"
+}
