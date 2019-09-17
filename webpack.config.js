@@ -1,4 +1,5 @@
 const path = require('path');
+const THREE = require('three');
 
 module.exports = {
   entry: './src/index.js',
@@ -7,5 +8,9 @@ module.exports = {
     path: path.resolve(__dirname, 'dist')
   },
   mode:'development',
+    // development server options
+  devServer: {
+        contentBase: path.join(__dirname, "dist")
+  }
 
 };
