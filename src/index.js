@@ -19,6 +19,8 @@ controls.update();
 
 // Instantiate a loader
 var loader = new GLTFLoader();
+var mixer = null;
+var clock = new THREE.Clock();
 
 
 // Load a glTF resource
@@ -27,14 +29,22 @@ loader.load(
 	'Nico.glb',
 	// called when the resource is loaded
 	function ( gltf ) {
+		var model = gltf.scene;
 
-		scene.add( gltf.scene );
+		scene.add(model );
 
 		gltf.animations; // Array<THREE.AnimationClip>
 		gltf.scene; // THREE.Scene
 		gltf.scenes; // Array<THREE.Scene>
 		gltf.cameras; // Array<THREE.Camera>
-        gltf.asset; // Object
+		gltf.asset; // Object
+		
+
+		mixer = new THREE.AnimationMixer(model);
+		if(gltf.animations[0]){
+			mixer.clipAction(gltf.animations[0]).play();
+			animate();
+		}
         
 
 	},
@@ -52,12 +62,18 @@ loader.load(
 	}
 );
 
-var light = new THREE.HemisphereLight();
-scene.add( light );
+var pointLight = new THREE.PointLight(0xffffff, 1, 100);
+pointLight.position.set(-5, 1, 5);
+scene.add(pointLight);
 
 
 var animate = function () {
-    requestAnimationFrame( animate );
+	requestAnimationFrame( animate );
+	var delta = clock.getDelta();
+	if (mixer != null) {
+		mixer.update(delta);
+	};
+	renderer.render(scene, camera);
 
 
     renderer.render( scene, camera );
