@@ -26,21 +26,34 @@ function init() {
     document.body.appendChild(container);
 
     scene = new THREE.Scene();
+    scene.fog = new THREE.Fog( 0x050505, 2000, 3500 );
+    scene.add( new THREE.AmbientLight( 0xffffff, 1 ) );
+    scene.background = new THREE.Color( 0x000000 );
 
-    camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 10000);
+    var axesHelper = new THREE.AxesHelper( 5 );
+    scene.add( axesHelper );
 
-    var light = new THREE.HemisphereLight();
-    scene.add(light);
+    camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, 10000);
+
+    var size = 10;
+    var divisions = 10;
+
+    var gridHelper = new THREE.GridHelper( size, divisions );
+    scene.add( gridHelper );
+
+    /*var light = new THREE.PointLight( 0xff0000, 10000, 100 );
+    light.position.set( 50, 50, -2000 );
+    scene.add( light );*/
 
     raycaster = new THREE.Raycaster();
     controls = new THREE.MapControls(camera, renderer);
     controls.update();
 
-    //controls.maxDistance = 200;
-    controls.minDistance = 160;
-    controls.maxPolarAngle = Math.PI / 2 * 1;
+    controls.minDistance = 1;
 
-    renderer = new THREE.WebGLRenderer();
+    renderer = new THREE.WebGLRenderer(scene.fog.color );
+    renderer.gammaOutput = true;
+    renderer.gammaFactor = 2.2;
     //renderer.setClearColor(0xf0f0f0);
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -62,6 +75,7 @@ function loadModels() {
         scene.add(model);
 
         camera.lookAt(model);
+        camera.position.z=-2000;
 
 
         function clicked(event) {
@@ -97,7 +111,7 @@ function loadModels() {
                 mesh.position.set(target.x,target.y,target.z);
                 console.log("Adding geometry");
                 scene.add( mesh );
-                //camera.lookAt(mesh);
+
 
             } else {
 
@@ -143,11 +157,5 @@ function animate() {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
     controls.update();
-
-    //const delta = clock.getDelta();
-
-    /*mixers.forEach((mixer) => {
-      mixer.update(delta);
-    });*/
 
 }
