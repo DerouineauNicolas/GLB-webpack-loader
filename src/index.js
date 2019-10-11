@@ -32,17 +32,16 @@ function init() {
     var light = new THREE.HemisphereLight();
     scene.add(light);
 
-
     raycaster = new THREE.Raycaster();
     controls = new THREE.MapControls(camera, renderer);
     controls.update();
 
-    controls.maxDistance = 200;
+    //controls.maxDistance = 200;
     controls.minDistance = 160;
     controls.maxPolarAngle = Math.PI / 2 * 1;
 
     renderer = new THREE.WebGLRenderer();
-    renderer.setClearColor(0xf0f0f0);
+    //renderer.setClearColor(0xf0f0f0);
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
@@ -91,6 +90,14 @@ function loadModels() {
 
                 console.log("target", target);
                 console.log("clicked");
+
+                var geometry = new THREE.BoxBufferGeometry( 1, 1, 1 );
+                var material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+                var mesh = new THREE.Mesh( geometry, material );
+                mesh.position.set(target.x,target.y,target.z);
+                console.log("Adding geometry");
+                scene.add( mesh );
+                //camera.lookAt(mesh);
 
             } else {
 
