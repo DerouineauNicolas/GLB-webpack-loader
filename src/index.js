@@ -13,6 +13,7 @@ var mouse = new THREE.Vector2(),
 var radius = 100,
     theta = 0;
 var model;
+var scale;
 
 const mixers = [];
 const clock = new THREE.Clock();
@@ -33,7 +34,7 @@ function init() {
     var axesHelper = new THREE.AxesHelper( 5 );
     scene.add( axesHelper );
 
-    camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, 10000);
+    camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 10000);
 
     var size = 10;
     var divisions = 10;
@@ -46,18 +47,18 @@ function init() {
     scene.add( light );*/
 
     raycaster = new THREE.Raycaster();
-    controls = new THREE.MapControls(camera, renderer);
-    controls.update();
-
-    controls.minDistance = 1;
+   
 
     renderer = new THREE.WebGLRenderer(scene.fog.color );
     renderer.gammaOutput = true;
     renderer.gammaFactor = 2.2;
-    //renderer.setClearColor(0xf0f0f0);
+
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
+    controls = new THREE.MapControls(camera, renderer.domElement);
+    controls.minDistance = 1;
+    controls.update();
     loadModels();
 
 }
@@ -71,11 +72,23 @@ function loadModels() {
         model.position.copy(position);
         const animation = gltf.animations[0];
         const mixer = new THREE.AnimationMixer(model);
-        model.rotateX(Math.PI);
+        model.rotateX(-Math.PI/2);
+
+        console.log(model.children[0].geometry);
+
+        model.children[0].geometry.computeBoundingSphere();
+        scale = model.children[0].geometry.boundingSphere.radius
+
+        //model.geometry.computeBoundingSphere();
+
+        model.scale.x = 1/scale;
+        model.scale.y = 1/scale;
+        model.scale.z = 1/scale;
+
         scene.add(model);
 
         camera.lookAt(model);
-        camera.position.z=-2000;
+        camera.position.z=2/scale;
 
 
         function clicked(event) {
@@ -105,7 +118,7 @@ function loadModels() {
                 console.log("target", target);
                 console.log("clicked");
 
-                var geometry = new THREE.BoxBufferGeometry( 1, 1, 1 );
+                var geometry = new THREE.BoxBufferGeometry( 5/scale, 5/scale, 5/scale );
                 var material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
                 var mesh = new THREE.Mesh( geometry, material );
                 mesh.position.set(target.x,target.y,target.z);
