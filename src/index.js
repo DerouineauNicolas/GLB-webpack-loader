@@ -4,6 +4,7 @@ var utm = require('utm')
 
 const OrbitControls = require('three-orbitcontrols')
 import { MapControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { BufferGeometryUtils } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 
 var offset_x = 399619;
 var offset_y = 4810459;
@@ -31,6 +32,7 @@ var radius = 100,
     theta = 0;
 var model;
 var scale;
+var lod; 
 
 const mixers = [];
 const clock = new THREE.Clock();
@@ -77,6 +79,8 @@ function init() {
     document.body.appendChild(renderer.domElement);
     controls = new THREE.MapControls(camera, renderer.domElement);
     controls.update();
+
+    lod = new THREE.LOD();
     loadModels();
 
 }
@@ -84,32 +88,40 @@ function init() {
 function loadModels() {
 
     const loader = new GLTFLoader();
-    const onLoad = (gltf, position) => {
+    const onLoad = (gltf, position, LOD) => {
 
-        const model = gltf.scene.children[0];
-        model.position.copy(position);
-        const animation = gltf.animations[0];
-        const mixer = new THREE.AnimationMixer(model);
-
-        var camera_height;
+        //const model = gltf.scene.children[0];
+        //model.position.copy(position);
         var boundingSphere;
+        var geometries = [];
 
+        gltf.scene.traverse(function (child) {
+
+            if (child.isMesh) {
+                var geometry = child.geometry;
+                var material = child.material;
+
+                geometries.push(geometry);
+            }
+
+        });
+
+        var geometry = BufferGeometryUtils.mergeBufferGeometries( geometries );
+        var material = new THREE.LineBasicMaterial( { color: 0xff0000, linewidth: 2 } );
+        material.wireframe = true;
+        var mesh = new THREE.Mesh(geometry, material);
         
+        
+        mesh.geometry.computeBoundingSphere();
+        boundingSphere = mesh.geometry.boundingSphere;
 
-        if(model.geometry === undefined ){
-            model.children[0].geometry.computeBoundingSphere();
-            boundingSphere = model.children[0].geometry.boundingSphere;
-        }else{
-            model.geometry.computeBoundingSphere();
-            scale = model.geometry.boundingSphere.radius;
-            boundingSphere = model.geometry.boundingSphere;
-        }
+        //model.position.z = (-1) * boundingSphere.center.z;
 
-        model.position.z = (-1) * boundingSphere.center.z;
-
-        scene.add(model);
+        //
 
         camera.position.z = 5 * Math.abs(boundingSphere.center.z);
+        lod.addLevel(mesh, LOD);
+        scene.add(lod);
 
         function clicked(event) {
 
@@ -117,7 +129,7 @@ function loadModels() {
             mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
             raycaster.setFromCamera(mouse, camera);
 
-            var intersects = raycaster.intersectObject(model, true);
+            var intersects = raycaster.intersectObject(mesh, true);
 
             console.log(intersects.length)
 
@@ -173,7 +185,9 @@ function loadModels() {
 
 
     const parrotPosition = new THREE.Vector3(0, 0, 0);
-    loader.load('mesh_with_geojson/Model.glb', gltf => onLoad(gltf, parrotPosition), onProgress, onError);
+    loader.load('LOD_Model_1.glb', gltf => onLoad(gltf, parrotPosition, 150), onProgress, onError);
+    loader.load('LOD_Model_5.glb', gltf => onLoad(gltf, parrotPosition, 300), onProgress, onError);
+    loader.load('LOD_Model_10.glb', gltf => onLoad(gltf, parrotPosition, 450), onProgress, onError);
     //loader.load('test.glb', gltf => onLoad(gltf, parrotPosition), onProgress, onError);
 
 }
