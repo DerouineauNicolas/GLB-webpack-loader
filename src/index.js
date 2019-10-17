@@ -120,7 +120,10 @@ function loadModels() {
         mesh.geometry.computeBoundingSphere();
         boundingSphere = mesh.geometry.boundingSphere;
 
-        camera.position.z = 5 * Math.abs(boundingSphere.center.z);
+        if(LOD_level==3)
+            camera.position.z = 3 * Math.abs(mesh.geometry.boundingSphere.radius);
+
+        
         LOD_instance.addLevel(mesh, LOD_level*mesh.geometry.boundingSphere.radius);
         scene.add(LOD_instance);
 
@@ -190,22 +193,27 @@ function loadModels() {
 
     const originPosition = new THREE.Vector3(0, 0, 0);
     var lod1 = new THREE.LOD();
-    loader.load('LOD_Model_1.glb', gltf => onLoad(gltf, originPosition, lod1, 1), onProgress, onError);
-    loader.load('LOD_Model_5.glb', gltf => onLoad(gltf, originPosition, lod1, 2), onProgress, onError);
     loader.load('LOD_Model_10.glb', gltf => onLoad(gltf, originPosition, lod1, 3), onProgress, onError);
+    loader.load('LOD_Model_5.glb', gltf => onLoad(gltf, originPosition, lod1, 2), onProgress, onError);
+    loader.load('LOD_Model_1.glb', gltf => onLoad(gltf, originPosition, lod1, 1), onProgress, onError);
+    
+    
     var lod2 = new THREE.LOD();
-    loader.load('LOD_Model.001_1.glb', gltf => onLoad(gltf, originPosition, lod2, 1), onProgress, onError);
-    loader.load('LOD_Model.001_5.glb', gltf => onLoad(gltf, originPosition, lod2, 2), onProgress, onError);
     loader.load('LOD_Model.001_10.glb', gltf => onLoad(gltf, originPosition, lod2, 3), onProgress, onError);
+    loader.load('LOD_Model.001_5.glb', gltf => onLoad(gltf, originPosition, lod2, 2), onProgress, onError);
+    loader.load('LOD_Model.001_1.glb', gltf => onLoad(gltf, originPosition, lod2, 1), onProgress, onError);
+    
     var lod3 = new THREE.LOD();
-    loader.load('LOD_Model.002_1.glb', gltf => onLoad(gltf, originPosition, lod3, 1), onProgress, onError);
-    loader.load('LOD_Model.002_5.glb', gltf => onLoad(gltf, originPosition, lod3, 2), onProgress, onError);
     loader.load('LOD_Model.002_10.glb', gltf => onLoad(gltf, originPosition, lod3, 3), onProgress, onError);
+    loader.load('LOD_Model.002_5.glb', gltf => onLoad(gltf, originPosition, lod3, 2), onProgress, onError);
+    loader.load('LOD_Model.002_1.glb', gltf => onLoad(gltf, originPosition, lod3, 1), onProgress, onError);
+    
+    
     var lod4 = new THREE.LOD();
-    loader.load('LOD_Model.003_1.glb', gltf => onLoad(gltf, originPosition, lod4, 1), onProgress, onError);
-    loader.load('LOD_Model.003_5.glb', gltf => onLoad(gltf, originPosition, lod4, 2), onProgress, onError);
     loader.load('LOD_Model.003_10.glb', gltf => onLoad(gltf, originPosition, lod4, 3), onProgress, onError);
-
+    loader.load('LOD_Model.003_5.glb', gltf => onLoad(gltf, originPosition, lod4, 2), onProgress, onError);
+    loader.load('LOD_Model.003_1.glb', gltf => onLoad(gltf, originPosition, lod4, 1), onProgress, onError);
+    
 }
 
 
