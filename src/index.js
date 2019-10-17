@@ -1,9 +1,26 @@
 import * as THREE from 'three';
 import GLTFLoader from 'three-gltf-loader';
+var utm = require('utm')
 
 const OrbitControls = require('three-orbitcontrols')
 import { MapControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
+var offset_x = 399619;
+var offset_y = 4810459;
+var offset_z = 399;
+
+
+//PROJCS["WGS 84 / UTM zone 31N",GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563,AUTHORITY["EPSG","7030"]],
+//AUTHORITY["EPSG","6326"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],
+//AUTHORITY["EPSG","4326"]],PROJECTION["Transverse_Mercator"],PARAMETER["latitude_of_origin",0],PARAMETER["central_meridian",3],
+//PARAMETER["scale_factor",0.9996],PARAMETER["false_easting",500000],PARAMETER["false_northing",0],UNIT["metre",1,AUTHORITY["EPSG","9001"]],
+//AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["EPSG","32631"]]
+
+
+
+var zoneNum;
+var zoneLetter;
+var northern;
 
 var container;
 var camera, scene, raycaster, renderer, controls;
@@ -35,6 +52,8 @@ function init() {
     scene.add( axesHelper );
 
     camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 10000);
+    //camera = new THREE.OrthographicCamera( window.innerWidth / - 2,  window.innerWidth  / 2, window.innerHeight / 2, window.innerHeight / - 2, 1, 1000 );
+    camera.up.set(0,0,1);
 
     var size = 10;
     var divisions = 10;
@@ -57,7 +76,6 @@ function init() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
     controls = new THREE.MapControls(camera, renderer.domElement);
-    controls.minDistance = 1;
     controls.update();
     loadModels();
 
@@ -72,24 +90,26 @@ function loadModels() {
         model.position.copy(position);
         const animation = gltf.animations[0];
         const mixer = new THREE.AnimationMixer(model);
-        model.rotateX(-Math.PI/2);
 
-        console.log(model.children[0].geometry);
+        var camera_height;
+        var boundingSphere;
 
-        model.children[0].geometry.computeBoundingSphere();
-        scale = model.children[0].geometry.boundingSphere.radius
+        
 
-        //model.geometry.computeBoundingSphere();
+        if(model.geometry === undefined ){
+            model.children[0].geometry.computeBoundingSphere();
+            boundingSphere = model.children[0].geometry.boundingSphere;
+        }else{
+            model.geometry.computeBoundingSphere();
+            scale = model.geometry.boundingSphere.radius;
+            boundingSphere = model.geometry.boundingSphere;
+        }
 
-        model.scale.x = 1/scale;
-        model.scale.y = 1/scale;
-        model.scale.z = 1/scale;
+        model.position.z = (-1) * boundingSphere.center.z;
 
         scene.add(model);
 
-        camera.lookAt(model);
-        camera.position.z=2/scale;
-
+        camera.position.z = 5 * Math.abs(boundingSphere.center.z);
 
         function clicked(event) {
 
@@ -153,7 +173,8 @@ function loadModels() {
 
 
     const parrotPosition = new THREE.Vector3(0, 0, 0);
-    loader.load('test.glb', gltf => onLoad(gltf, parrotPosition), onProgress, onError);
+    loader.load('mesh_with_geojson/Model.glb', gltf => onLoad(gltf, parrotPosition), onProgress, onError);
+    //loader.load('test.glb', gltf => onLoad(gltf, parrotPosition), onProgress, onError);
 
 }
 
