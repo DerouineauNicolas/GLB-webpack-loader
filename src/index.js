@@ -5,6 +5,7 @@ var utm = require('utm')
 const OrbitControls = require('three-orbitcontrols')
 import { MapControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { BufferGeometryUtils } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
+import { GUI } from 'three/examples/jsm/libs/dat.gui.module.js';
 
 var offset_x = 399619;
 var offset_y = 4810459;
@@ -18,7 +19,9 @@ var offset_z = 399;
 //AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["EPSG","32631"]]
 
 
-
+var params = {
+    enableRaytracing: false,
+};
 var zoneNum;
 var zoneLetter;
 var northern;
@@ -32,10 +35,7 @@ var radius = 100,
     theta = 0;
 var model;
 var scale;
-var lod; 
 
-const mixers = [];
-const clock = new THREE.Clock();
 
 init();
 animate();
@@ -80,7 +80,10 @@ function init() {
     controls = new THREE.MapControls(camera, renderer.domElement);
     controls.update();
 
-    lod = new THREE.LOD();
+    var gui = new GUI();
+    gui.add( params, 'enableRaytracing' );
+    gui.open();
+    
     loadModels();
 
 }
@@ -88,12 +91,11 @@ function init() {
 function loadModels() {
 
     const loader = new GLTFLoader();
-    const onLoad = (gltf, position, LOD) => {
+    const onLoad = (gltf, position, LOD_instance, LOD_level) => {
 
-        //const model = gltf.scene.children[0];
-        //model.position.copy(position);
         var boundingSphere;
         var geometries = [];
+        var materials = [];
 
         gltf.scene.traverse(function (child) {
 
@@ -102,12 +104,15 @@ function loadModels() {
                 var material = child.material;
 
                 geometries.push(geometry);
+                materials.push(material);
             }
 
         });
 
-        var geometry = BufferGeometryUtils.mergeBufferGeometries( geometries );
-        var material = new THREE.LineBasicMaterial( { color: 0xff0000, linewidth: 2 } );
+        var geometry = BufferGeometryUtils.mergeBufferGeometries( geometries, true);
+        console.log(geometry);
+        //var material = new THREE.LineBasicMaterial( { color: 0xff0000, linewidth: 2 } );
+        var material = new THREE.MultiMaterial(materials);
         material.wireframe = true;
         var mesh = new THREE.Mesh(geometry, material);
         
@@ -115,52 +120,51 @@ function loadModels() {
         mesh.geometry.computeBoundingSphere();
         boundingSphere = mesh.geometry.boundingSphere;
 
-        //model.position.z = (-1) * boundingSphere.center.z;
-
-        //
-
         camera.position.z = 5 * Math.abs(boundingSphere.center.z);
-        lod.addLevel(mesh, LOD);
-        scene.add(lod);
+        LOD_instance.addLevel(mesh, LOD_level);
+        scene.add(LOD_instance);
 
         function clicked(event) {
 
-            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-            mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
-            raycaster.setFromCamera(mouse, camera);
+            if(params.enableRaytracing){
 
-            var intersects = raycaster.intersectObject(mesh, true);
+                mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+                mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+                raycaster.setFromCamera(mouse, camera);
 
-            console.log(intersects.length)
+                var intersects = raycaster.intersectObject(LOD_instance, true);
 
-            if (intersects.length > 0) {
-                var position = {
-                    x: controls.target.x,
-                    y: controls.target.y,
-                    z: controls.target.z
-                };
-                console.log("position", position);
+                console.log(intersects.length)
 
-                var target = {
-                    x: intersects[0].point.x,
-                    y: intersects[0].point.y,
-                    z: intersects[0].point.z
+                if (intersects.length > 0) {
+                    var position = {
+                        x: controls.target.x,
+                        y: controls.target.y,
+                        z: controls.target.z
+                    };
+                    console.log("position", position);
+
+                    var target = {
+                        x: intersects[0].point.x,
+                        y: intersects[0].point.y,
+                        z: intersects[0].point.z
+                    }
+
+                    console.log("target", target);
+                    console.log("clicked");
+
+                    var geometry = new THREE.BoxBufferGeometry( 5/scale, 5/scale, 5/scale );
+                    var material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+                    var mesh = new THREE.Mesh( geometry, material );
+                    mesh.position.set(target.x,target.y,target.z);
+                    console.log("Adding geometry");
+                    scene.add( mesh );
+
+
+                } else {
+
+                    INTERSECTED = null;
                 }
-
-                console.log("target", target);
-                console.log("clicked");
-
-                var geometry = new THREE.BoxBufferGeometry( 5/scale, 5/scale, 5/scale );
-                var material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
-                var mesh = new THREE.Mesh( geometry, material );
-                mesh.position.set(target.x,target.y,target.z);
-                console.log("Adding geometry");
-                scene.add( mesh );
-
-
-            } else {
-
-                INTERSECTED = null;
             }
         }
 
@@ -184,11 +188,23 @@ function loadModels() {
     };
 
 
-    const parrotPosition = new THREE.Vector3(0, 0, 0);
-    loader.load('LOD_Model_1.glb', gltf => onLoad(gltf, parrotPosition, 150), onProgress, onError);
-    loader.load('LOD_Model_5.glb', gltf => onLoad(gltf, parrotPosition, 300), onProgress, onError);
-    loader.load('LOD_Model_10.glb', gltf => onLoad(gltf, parrotPosition, 450), onProgress, onError);
-    //loader.load('test.glb', gltf => onLoad(gltf, parrotPosition), onProgress, onError);
+    const originPosition = new THREE.Vector3(0, 0, 0);
+    var lod1 = new THREE.LOD();
+    loader.load('LOD_Model_1.glb', gltf => onLoad(gltf, originPosition, lod1, 150), onProgress, onError);
+    loader.load('LOD_Model_5.glb', gltf => onLoad(gltf, originPosition, lod1, 300), onProgress, onError);
+    loader.load('LOD_Model_10.glb', gltf => onLoad(gltf, originPosition, lod1, 450), onProgress, onError);
+    var lod2 = new THREE.LOD();
+    loader.load('LOD_Model.001_1.glb', gltf => onLoad(gltf, originPosition, lod2, 150), onProgress, onError);
+    loader.load('LOD_Model.001_5.glb', gltf => onLoad(gltf, originPosition, lod2, 300), onProgress, onError);
+    loader.load('LOD_Model.001_10.glb', gltf => onLoad(gltf, originPosition, lod2, 450), onProgress, onError);
+    var lod3 = new THREE.LOD();
+    loader.load('LOD_Model.002_1.glb', gltf => onLoad(gltf, originPosition, lod3, 150), onProgress, onError);
+    loader.load('LOD_Model.002_5.glb', gltf => onLoad(gltf, originPosition, lod3, 300), onProgress, onError);
+    loader.load('LOD_Model.002_10.glb', gltf => onLoad(gltf, originPosition, lod3, 450), onProgress, onError);
+    var lod4 = new THREE.LOD();
+    loader.load('LOD_Model.003_1.glb', gltf => onLoad(gltf, originPosition, lod4, 150), onProgress, onError);
+    loader.load('LOD_Model.003_5.glb', gltf => onLoad(gltf, originPosition, lod4, 300), onProgress, onError);
+    loader.load('LOD_Model.003_10.glb', gltf => onLoad(gltf, originPosition, lod4, 450), onProgress, onError);
 
 }
 
