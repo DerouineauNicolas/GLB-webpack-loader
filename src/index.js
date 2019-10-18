@@ -6,6 +6,7 @@ const OrbitControls = require('three-orbitcontrols')
 import { MapControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { BufferGeometryUtils } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import { GUI } from 'three/examples/jsm/libs/dat.gui.module.js';
+import MeshonLoad from './mesh_update.js'
 
 var offset_x = 399619;
 var offset_y = 4810459;
@@ -67,8 +68,6 @@ function init() {
     light.position.set( 50, 50, -2000 );
     scene.add( light );*/
 
-    raycaster = new THREE.Raycaster();
-   
 
     renderer = new THREE.WebGLRenderer(scene.fog.color );
     renderer.gammaOutput = true;
@@ -91,96 +90,6 @@ function init() {
 function loadModels() {
 
     const loader = new GLTFLoader();
-    const onLoad = (gltf, position, LOD_instance, LOD_level) => {
-
-        var boundingSphere;
-        var geometries = [];
-        var materials = [];
-
-        gltf.scene.traverse(function (child) {
-
-            if (child.isMesh) {
-                var geometry = child.geometry;
-                var material = child.material;
-
-                geometries.push(geometry);
-                materials.push(material);
-            }
-
-        });
-
-        var geometry = BufferGeometryUtils.mergeBufferGeometries( geometries, true);
-        console.log(geometry);
-        //var material = new THREE.LineBasicMaterial( { color: 0xff0000, linewidth: 2 } );
-        var material = new THREE.MultiMaterial(materials);
-        material.wireframe = true;
-        var mesh = new THREE.Mesh(geometry, material);
-        
-        
-        mesh.geometry.computeBoundingSphere();
-        boundingSphere = mesh.geometry.boundingSphere;
-
-        if(LOD_level==3)
-            camera.position.z = 3 * Math.abs(mesh.geometry.boundingSphere.radius);
-
-        
-        LOD_instance.addLevel(mesh, LOD_level*mesh.geometry.boundingSphere.radius);
-        scene.add(LOD_instance);
-
-        function clicked(event) {
-
-            if(params.enableRaytracing){
-
-                mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-                mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
-                raycaster.setFromCamera(mouse, camera);
-
-                var intersects = raycaster.intersectObject(LOD_instance, true);
-
-                console.log(intersects.length)
-
-                if (intersects.length > 0) {
-                    var position = {
-                        x: controls.target.x,
-                        y: controls.target.y,
-                        z: controls.target.z
-                    };
-                    console.log("position", position);
-
-                    var target = {
-                        x: intersects[0].point.x,
-                        y: intersects[0].point.y,
-                        z: intersects[0].point.z
-                    }
-
-                    console.log("target", target);
-                    console.log("clicked");
-
-                    var geometry = new THREE.BoxBufferGeometry( 5/scale, 5/scale, 5/scale );
-                    var material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
-                    var mesh = new THREE.Mesh( geometry, material );
-                    mesh.position.set(target.x,target.y,target.z);
-                    console.log("Adding geometry");
-                    scene.add( mesh );
-
-
-                } else {
-
-                    INTERSECTED = null;
-                }
-            }
-        }
-
-        renderer.domElement.addEventListener('mousedown', function (event) {
-            // find intersections
-
-            clicked(event);
-            camera.updateMatrixWorld();
-
-
-        });
-
-    };
 
 
     const onProgress = () => { };
@@ -192,27 +101,11 @@ function loadModels() {
 
 
     const originPosition = new THREE.Vector3(0, 0, 0);
-    var lod1 = new THREE.LOD();
-    loader.load('LOD_Model_10.glb', gltf => onLoad(gltf, originPosition, lod1, 3), onProgress, onError);
-    loader.load('LOD_Model_5.glb', gltf => onLoad(gltf, originPosition, lod1, 2), onProgress, onError);
-    loader.load('LOD_Model_1.glb', gltf => onLoad(gltf, originPosition, lod1, 1), onProgress, onError);
-    
-    
-    var lod2 = new THREE.LOD();
-    loader.load('LOD_Model.001_10.glb', gltf => onLoad(gltf, originPosition, lod2, 3), onProgress, onError);
-    loader.load('LOD_Model.001_5.glb', gltf => onLoad(gltf, originPosition, lod2, 2), onProgress, onError);
-    loader.load('LOD_Model.001_1.glb', gltf => onLoad(gltf, originPosition, lod2, 1), onProgress, onError);
-    
-    var lod3 = new THREE.LOD();
-    loader.load('LOD_Model.002_10.glb', gltf => onLoad(gltf, originPosition, lod3, 3), onProgress, onError);
-    loader.load('LOD_Model.002_5.glb', gltf => onLoad(gltf, originPosition, lod3, 2), onProgress, onError);
-    loader.load('LOD_Model.002_1.glb', gltf => onLoad(gltf, originPosition, lod3, 1), onProgress, onError);
-    
-    
-    var lod4 = new THREE.LOD();
-    loader.load('LOD_Model.003_10.glb', gltf => onLoad(gltf, originPosition, lod4, 3), onProgress, onError);
-    loader.load('LOD_Model.003_5.glb', gltf => onLoad(gltf, originPosition, lod4, 2), onProgress, onError);
-    loader.load('LOD_Model.003_1.glb', gltf => onLoad(gltf, originPosition, lod4, 1), onProgress, onError);
+    //
+    loader.load('LOD_Model_10.glb', gltf => MeshonLoad(gltf, loader, scene, camera, renderer, params, mouse, 'LOD_Model_1.glb'), onProgress, onError);
+    loader.load('LOD_Model.001_10.glb', gltf => MeshonLoad(gltf, loader, scene, camera, renderer, params, mouse, 'LOD_Model.001_1.glb'), onProgress, onError);
+    loader.load('LOD_Model.002_10.glb', gltf => MeshonLoad(gltf, loader, scene, camera, renderer, params, mouse, 'LOD_Model.002_1.glb'), onProgress, onError);
+
     
 }
 

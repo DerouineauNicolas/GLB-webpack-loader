@@ -2,9 +2,13 @@ const path = require('path');
 const THREE = require('three');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: {
+    main: './src/index.js',
+    mesh_update: './src/mesh_update.js',
+
+  },
   output: {
-    filename: 'main.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, 'dist')
   },
   mode:'development',
