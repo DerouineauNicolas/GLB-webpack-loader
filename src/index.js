@@ -105,6 +105,7 @@ function loadModels() {
     loader.load('LOD_Model_10.glb', gltf => MeshonLoad(gltf, loader, scene, camera, renderer, params, mouse, 'LOD_Model_1.glb'), onProgress, onError);
     loader.load('LOD_Model.001_10.glb', gltf => MeshonLoad(gltf, loader, scene, camera, renderer, params, mouse, 'LOD_Model.001_1.glb'), onProgress, onError);
     loader.load('LOD_Model.002_10.glb', gltf => MeshonLoad(gltf, loader, scene, camera, renderer, params, mouse, 'LOD_Model.002_1.glb'), onProgress, onError);
+    loader.load('LOD_Model.003_10.glb', gltf => MeshonLoad(gltf, loader, scene, camera, renderer, params, mouse, 'LOD_Model.003_1.glb'), onProgress, onError);
 
     
 }
