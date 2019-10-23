@@ -54,7 +54,7 @@ function init() {
     var axesHelper = new THREE.AxesHelper( 5 );
     scene.add( axesHelper );
 
-    camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 10000);
+    camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 20000);
     //camera = new THREE.OrthographicCamera( window.innerWidth / - 2,  window.innerWidth  / 2, window.innerHeight / 2, window.innerHeight / - 2, 1, 1000 );
     camera.up.set(0,0,1);
 
@@ -102,10 +102,13 @@ function loadModels() {
 
     const originPosition = new THREE.Vector3(0, 0, 0);
     //
-    loader.load('LOD_Model_10.glb', gltf => MeshonLoad(gltf, loader, scene, camera, renderer, params, mouse, 'LOD_Model_1.glb'), onProgress, onError);
-    loader.load('LOD_Model.001_10.glb', gltf => MeshonLoad(gltf, loader, scene, camera, renderer, params, mouse, 'LOD_Model.001_1.glb'), onProgress, onError);
-    loader.load('LOD_Model.002_10.glb', gltf => MeshonLoad(gltf, loader, scene, camera, renderer, params, mouse, 'LOD_Model.002_1.glb'), onProgress, onError);
-    loader.load('LOD_Model.003_10.glb', gltf => MeshonLoad(gltf, loader, scene, camera, renderer, params, mouse, 'LOD_Model.003_1.glb'), onProgress, onError);
+    loader.load('caca/LOD_Model.002_low.glb', gltf => MeshonLoad(gltf, loader, scene, camera, renderer, params, mouse, 'caca/LOD_Model.002_medium.glb', 2123.5369085736793, 'caca/LOD_Model.002_high.glb'), onProgress, onError);
+
+    loader.load('caca/LOD_Model_low.glb', gltf => MeshonLoad(gltf, loader, scene, camera, renderer, params, mouse, 'caca/LOD_Model_medium.glb', 2123.5369085736793, 'caca/LOD_Model_high.glb'), onProgress, onError);
+    
+    loader.load('caca/LOD_Model.001_low.glb', gltf => MeshonLoad(gltf, loader, scene, camera, renderer, params, mouse, 'caca/LOD_Model.001_medium.glb', 2123.5369085736793, 'caca/LOD_Model.001_high.glb'), onProgress, onError);
+    
+    loader.load('caca/LOD_Model.003_low.glb', gltf => MeshonLoad(gltf, loader, scene, camera, renderer, params, mouse, 'caca/LOD_Model.003_medium.glb', 2123.5369085736793, 'caca/LOD_Model.003_high.glb'), onProgress, onError);
 
     
 }

@@ -32,7 +32,6 @@ function loadAndMergeMesh(gltf){
 
 function loadHidherresolution(gltf, lod, level){
      var mesh = loadAndMergeMesh(gltf);
-     console.log("Adding higher resolution");
      mesh.geometry.computeBoundingSphere();
      mesh.position.x=-mesh.geometry.boundingSphere.center.x;
      mesh.position.y=-mesh.geometry.boundingSphere.center.y;
@@ -41,7 +40,7 @@ function loadHidherresolution(gltf, lod, level){
 
 }
 
-export default function MeshonLoad (gltf, loader, scene, camera, renderer, params, mouse, LOD_level) {
+export default function MeshonLoad (gltf, loader, scene, camera, renderer, params, mouse, LOD_level_medium, LOD_level_medium_distance, LOD_level_high) {
 
     var boundingSphere;
 
@@ -49,6 +48,7 @@ export default function MeshonLoad (gltf, loader, scene, camera, renderer, param
     var lodposition = new THREE.Vector3();
     var cameraposition = new THREE.Vector3();
     var higher_level_loaded = false;
+    var medium_level_loaded = false;
     
     var raycaster = new THREE.Raycaster();
     lod.up.set(0,0,1);
@@ -59,9 +59,7 @@ export default function MeshonLoad (gltf, loader, scene, camera, renderer, param
     mesh.geometry.computeBoundingSphere();
     boundingSphere = mesh.geometry.boundingSphere;
 
-    camera.position.z = 3 * Math.abs(mesh.geometry.boundingSphere.radius);
-
-    lod.name=LOD_level;
+    camera.position.z = 2*2123.5369085736793;
     
     lod.addLevel(mesh, 3*mesh.geometry.boundingSphere.radius);
     mesh.position.x=-boundingSphere.center.x;
@@ -98,16 +96,23 @@ export default function MeshonLoad (gltf, loader, scene, camera, renderer, param
     function clicked(event) {
 
 
-        if(!higher_level_loaded){
+        if(!higher_level_loaded || !medium_level_loaded){
        
             cameraposition.x=camera.position.x;
             cameraposition.y=camera.position.y;
             cameraposition.z=camera.position.z;
 
             if(cameraposition.distanceTo(lodposition)<boundingSphere.radius){
-                loader.load(LOD_level, gltf => loadHidherresolution(gltf, lod, 1), onProgress, onError);
+                loader.load(LOD_level_high, gltf => loadHidherresolution(gltf, lod, 1), onProgress, onError);
+                console.log("Adding high resolution");
                 higher_level_loaded=true;
             }
+            if(cameraposition.distanceTo(lodposition)<LOD_level_medium_distance){
+                loader.load(LOD_level_medium, gltf => loadHidherresolution(gltf, lod, 1), onProgress, onError);
+                console.log("Adding medium resolution");
+                medium_level_loaded=true;
+            }
+
         }
 
         if(params.enableRaytracing){
@@ -145,16 +150,23 @@ export default function MeshonLoad (gltf, loader, scene, camera, renderer, param
 
     function scroll(event) {
 
-        if(!higher_level_loaded){
+        if(!higher_level_loaded || !medium_level_loaded){
        
             cameraposition.x=camera.position.x;
             cameraposition.y=camera.position.y;
             cameraposition.z=camera.position.z;
 
-            if(cameraposition.distanceTo(lodposition)<boundingSphere.radius){
-                loader.load(LOD_level, gltf => loadHidherresolution(gltf, lod, 1), onProgress, onError);
+            if(!higher_level_loaded && cameraposition.distanceTo(lodposition)<boundingSphere.radius){
+                loader.load(LOD_level_high, gltf => loadHidherresolution(gltf, lod, 1), onProgress, onError);
+                console.log("Adding high resolution");
                 higher_level_loaded=true;
             }
+            if(!medium_level_loaded && cameraposition.distanceTo(lodposition)<LOD_level_medium_distance){
+                loader.load(LOD_level_medium, gltf => loadHidherresolution(gltf, lod, 1), onProgress, onError);
+                console.log("Adding medium resolution");
+                medium_level_loaded=true;
+            }
+
         }
     }
 
