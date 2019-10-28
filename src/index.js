@@ -6,7 +6,7 @@ const OrbitControls = require('three-orbitcontrols')
 import { MapControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { BufferGeometryUtils } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import { GUI } from 'three/examples/jsm/libs/dat.gui.module.js';
-import MeshonLoad from './mesh_update.js'
+import LOD from './mesh_update.js'
 
 var offset_x = 399619;
 var offset_y = 4810459;
@@ -47,29 +47,29 @@ function init() {
     document.body.appendChild(container);
 
     scene = new THREE.Scene();
-    scene.fog = new THREE.Fog( 0x050505, 2000, 3500 );
-    scene.add( new THREE.AmbientLight( 0xffffff, 1 ) );
-    scene.background = new THREE.Color( 0x000000 );
+    scene.fog = new THREE.Fog(0x050505, 2000, 3500);
+    scene.add(new THREE.AmbientLight(0xffffff, 1));
+    scene.background = new THREE.Color(0x000000);
 
-    var axesHelper = new THREE.AxesHelper( 5 );
-    scene.add( axesHelper );
+    var axesHelper = new THREE.AxesHelper(5);
+    scene.add(axesHelper);
 
     camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 20000);
     //camera = new THREE.OrthographicCamera( window.innerWidth / - 2,  window.innerWidth  / 2, window.innerHeight / 2, window.innerHeight / - 2, 1, 1000 );
-    camera.up.set(0,0,1);
+    camera.up.set(0, 0, 1);
 
     var size = 10;
     var divisions = 10;
 
-    var gridHelper = new THREE.GridHelper( size, divisions );
-    scene.add( gridHelper );
+    var gridHelper = new THREE.GridHelper(size, divisions);
+    scene.add(gridHelper);
 
     /*var light = new THREE.PointLight( 0xff0000, 10000, 100 );
     light.position.set( 50, 50, -2000 );
     scene.add( light );*/
 
 
-    renderer = new THREE.WebGLRenderer(scene.fog.color );
+    renderer = new THREE.WebGLRenderer(scene.fog.color);
     renderer.gammaOutput = true;
     renderer.gammaFactor = 2.2;
 
@@ -80,9 +80,9 @@ function init() {
     controls.update();
 
     var gui = new GUI();
-    gui.add( params, 'enableRaytracing' );
+    gui.add(params, 'enableRaytracing');
     gui.open();
-    
+
     loadModels();
 
 }
@@ -92,25 +92,22 @@ function loadModels() {
     const loader = new GLTFLoader();
 
 
-    const onProgress = () => { };
-
-
-    const onError = (errorMessage) => {
-        console.log(errorMessage);
-    };
-
-
     const originPosition = new THREE.Vector3(0, 0, 0);
-    //
-    loader.load('caca/LOD_Model.002_low.glb', gltf => MeshonLoad(gltf, loader, scene, camera, renderer, params, mouse, 'caca/LOD_Model.002_medium.glb', 2123.5369085736793, 'caca/LOD_Model.002_high.glb'), onProgress, onError);
 
-    loader.load('caca/LOD_Model_low.glb', gltf => MeshonLoad(gltf, loader, scene, camera, renderer, params, mouse, 'caca/LOD_Model_medium.glb', 2123.5369085736793, 'caca/LOD_Model_high.glb'), onProgress, onError);
-    
-    loader.load('caca/LOD_Model.001_low.glb', gltf => MeshonLoad(gltf, loader, scene, camera, renderer, params, mouse, 'caca/LOD_Model.001_medium.glb', 2123.5369085736793, 'caca/LOD_Model.001_high.glb'), onProgress, onError);
-    
-    loader.load('caca/LOD_Model.003_low.glb', gltf => MeshonLoad(gltf, loader, scene, camera, renderer, params, mouse, 'caca/LOD_Model.003_medium.glb', 2123.5369085736793, 'caca/LOD_Model.003_high.glb'), onProgress, onError);
+    var LODManager = new LOD(scene, camera, renderer, params, mouse, loader);
 
-    
+    LODManager.AddBaseLayer('redbull_v4/LOD_Tile_+002_+017_low.glb', 'redbull_v4/LOD_Tile_+002_+017_medium.glb', 2739.4982770425404);
+
+    //loader.load('redbull_v4/LOD_Tile_+002_+017_low.glb', gltf => MeshonLoad(gltf, loader, scene, camera, renderer, params, mouse, 'redbull_v4/LOD_Tile_+002_+017_medium.glb', 2739.4982770425404, 'redbull_v4/LOD_Tile_+002_+017_high.glb'), onProgress, onError);
+
+    //loader.load('redbull_v4/LOD_Tile_+003_+018_low.glb', gltf => MeshonLoad(gltf, loader, scene, camera, renderer, params, mouse, 'redbull_v4/LOD_Tile_+003_+018_medium.glb', 2739.4982770425404, 'redbull_v4/LOD_Tile_+003_+018_high.glb'), onProgress, onError);
+
+    //loader.load('redbull_v4/LOD_Tile_+000_+008_low.glb', gltf => MeshonLoad(gltf, loader, scene, camera, renderer, params, mouse, 'redbull_v4/LOD_Tile_+000_+008_medium.glb', 2739.4982770425404, 'redbull_v4/LOD_Tile_+000_+008_high.glb'), onProgress, onError);
+
+    //loader.load('redbull_v4/LOD_Tile_+001_+008_low.glb', gltf => MeshonLoad(gltf, loader, scene, camera, renderer, params, mouse, 'redbull_v4/LOD_Tile_+001_+008_medium.glb', 2739.4982770425404, 'redbull_v4/LOD_Tile_+001_+008_high.glb'), onProgress, onError);
+
+
+
 }
 
 
@@ -121,6 +118,8 @@ function onWindowResize() {
     renderer.setSize(window.innerWidth, window.innerHeight);
 
 }
+
+
 
 function animate() {
     requestAnimationFrame(animate);
