@@ -8,7 +8,7 @@ function loadHidherresolution(gltf, lod, level) {
     mesh.position.x = -mesh.geometry.boundingSphere.center.x;
     mesh.position.y = -mesh.geometry.boundingSphere.center.y;
     mesh.position.z = -mesh.geometry.boundingSphere.center.z;
-    lod.addLevel(mesh, (level / 4));
+    lod.addLevel(mesh, (level));
 
 }
 
@@ -49,7 +49,7 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
         this.m_scene.add(lod);
 
         this.m_lodlist.push({
-            lodinstance: lod, lodposition: lod_position, medium_layer: LOD_level_medium, mediumdistance: LOD_level_medium_distance, high_layer: LOD_level_high, highdistance: boundingSphere
+            lodinstance: lod, lodposition: lod_position, medium_layer: LOD_level_medium, mediumdistance: LOD_level_medium_distance, high_layer: LOD_level_high, highdistance: boundingSphere.radius
             , medium_loaded: false, high_loaded: false
         })
     };
@@ -66,16 +66,16 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
         cameraposition.z = this.m_camera.position.z;
 
         this.m_lodlist.forEach(function (element) {
-            console.log(element);
+            //console.log(element);
             if ((!element.high_loaded) | (!element.medium_loaded)) {
                 var distance = cameraposition.distanceTo(element.lodposition);
-                console.log(distance);
+                //console.log(distance);
                 if (!element.high_loaded && distance < element.highdistance) {
                     loader.load(element.high_layer, gltf => loadHidherresolution(gltf, element.lodinstance, element.highdistance), null, null);
                     console.log("Adding high resolution");
-                    element.medium_loaded = true;
+                    element.high_loaded = true;
                 }
-                if (!element.high_loaded && distance < element.mediumdistance) {
+                if (!element.medium_loaded && distance < element.mediumdistance) {
                     loader.load(element.medium_layer, gltf => loadHidherresolution(gltf, element.lodinstance, element.mediumdistance), null, null);
                     console.log("Adding medium resolution");
                     element.medium_loaded = true;

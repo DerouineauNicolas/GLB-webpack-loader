@@ -96,7 +96,133 @@ function loadModels() {
 
     var LODManager = new LOD(scene, camera, renderer, params, mouse, loader);
 
-    LODManager.AddBaseLayer('redbull_v4/LOD_Tile_+002_+017_low.glb', 'redbull_v4/LOD_Tile_+002_+017_medium.glb', 2739.4982770425404, 'redbull_v4/LOD_Tile_+002_+017_high.glb');
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+002_+017_low.glb', 'redbull_v7/LOD_Tile_+002_+017_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+002_+017_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+003_+018_low.glb', 'redbull_v7/LOD_Tile_+003_+018_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+003_+018_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+000_+008_low.glb', 'redbull_v7/LOD_Tile_+000_+008_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+000_+008_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+001_+008_low.glb', 'redbull_v7/LOD_Tile_+001_+008_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+001_+008_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+002_+016_low.glb', 'redbull_v7/LOD_Tile_+002_+016_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+002_+016_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+001_+009_low.glb', 'redbull_v7/LOD_Tile_+001_+009_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+001_+009_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+000_+014_low.glb', 'redbull_v7/LOD_Tile_+000_+014_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+000_+014_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+002_+010_low.glb', 'redbull_v7/LOD_Tile_+002_+010_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+002_+010_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+003_+011_low.glb', 'redbull_v7/LOD_Tile_+003_+011_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+003_+011_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+000_+009_low.glb', 'redbull_v7/LOD_Tile_+000_+009_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+000_+009_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+000_+013_low.glb', 'redbull_v7/LOD_Tile_+000_+013_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+000_+013_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+003_+010_low.glb', 'redbull_v7/LOD_Tile_+003_+010_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+003_+010_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+003_+017_low.glb', 'redbull_v7/LOD_Tile_+003_+017_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+003_+017_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+003_+016_low.glb', 'redbull_v7/LOD_Tile_+003_+016_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+003_+016_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+002_+011_low.glb', 'redbull_v7/LOD_Tile_+002_+011_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+002_+011_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+004_+019_low.glb', 'redbull_v7/LOD_Tile_+004_+019_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+004_+019_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+004_+011_low.glb', 'redbull_v7/LOD_Tile_+004_+011_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+004_+011_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+001_+015_low.glb', 'redbull_v7/LOD_Tile_+001_+015_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+001_+015_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+004_+018_low.glb', 'redbull_v7/LOD_Tile_+004_+018_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+004_+018_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+004_+016_low.glb', 'redbull_v7/LOD_Tile_+004_+016_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+004_+016_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+000_+012_low.glb', 'redbull_v7/LOD_Tile_+000_+012_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+000_+012_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+005_+021_low.glb', 'redbull_v7/LOD_Tile_+005_+021_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+005_+021_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+005_+010_low.glb', 'redbull_v7/LOD_Tile_+005_+010_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+005_+010_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+004_+017_low.glb', 'redbull_v7/LOD_Tile_+004_+017_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+004_+017_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+004_+010_low.glb', 'redbull_v7/LOD_Tile_+004_+010_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+004_+010_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+005_+019_low.glb', 'redbull_v7/LOD_Tile_+005_+019_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+005_+019_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+005_+020_low.glb', 'redbull_v7/LOD_Tile_+005_+020_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+005_+020_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+005_+017_low.glb', 'redbull_v7/LOD_Tile_+005_+017_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+005_+017_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+001_+012_low.glb', 'redbull_v7/LOD_Tile_+001_+012_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+001_+012_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+005_+018_low.glb', 'redbull_v7/LOD_Tile_+005_+018_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+005_+018_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+001_+014_low.glb', 'redbull_v7/LOD_Tile_+001_+014_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+001_+014_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+001_+013_low.glb', 'redbull_v7/LOD_Tile_+001_+013_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+001_+013_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+005_+016_low.glb', 'redbull_v7/LOD_Tile_+005_+016_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+005_+016_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+005_+009_low.glb', 'redbull_v7/LOD_Tile_+005_+009_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+005_+009_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+005_+011_low.glb', 'redbull_v7/LOD_Tile_+005_+011_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+005_+011_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+002_+014_low.glb', 'redbull_v7/LOD_Tile_+002_+014_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+002_+014_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+002_+013_low.glb', 'redbull_v7/LOD_Tile_+002_+013_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+002_+013_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+002_+015_low.glb', 'redbull_v7/LOD_Tile_+002_+015_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+002_+015_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+002_+012_low.glb', 'redbull_v7/LOD_Tile_+002_+012_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+002_+012_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+003_+007_low.glb', 'redbull_v7/LOD_Tile_+003_+007_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+003_+007_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+004_+009_low.glb', 'redbull_v7/LOD_Tile_+004_+009_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+004_+009_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+004_+008_low.glb', 'redbull_v7/LOD_Tile_+004_+008_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+004_+008_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+003_+012_low.glb', 'redbull_v7/LOD_Tile_+003_+012_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+003_+012_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+003_+015_low.glb', 'redbull_v7/LOD_Tile_+003_+015_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+003_+015_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+000_+010_low.glb', 'redbull_v7/LOD_Tile_+000_+010_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+000_+010_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+003_+014_low.glb', 'redbull_v7/LOD_Tile_+003_+014_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+003_+014_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+004_+015_low.glb', 'redbull_v7/LOD_Tile_+004_+015_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+004_+015_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+003_+013_low.glb', 'redbull_v7/LOD_Tile_+003_+013_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+003_+013_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+005_+022_low.glb', 'redbull_v7/LOD_Tile_+005_+022_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+005_+022_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+003_+009_low.glb', 'redbull_v7/LOD_Tile_+003_+009_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+003_+009_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+004_+012_low.glb', 'redbull_v7/LOD_Tile_+004_+012_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+004_+012_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+003_+008_low.glb', 'redbull_v7/LOD_Tile_+003_+008_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+003_+008_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+000_+011_low.glb', 'redbull_v7/LOD_Tile_+000_+011_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+000_+011_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+005_+014_low.glb', 'redbull_v7/LOD_Tile_+005_+014_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+005_+014_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+004_+013_low.glb', 'redbull_v7/LOD_Tile_+004_+013_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+004_+013_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+001_+011_low.glb', 'redbull_v7/LOD_Tile_+001_+011_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+001_+011_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+004_+014_low.glb', 'redbull_v7/LOD_Tile_+004_+014_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+004_+014_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+002_+007_low.glb', 'redbull_v7/LOD_Tile_+002_+007_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+002_+007_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+002_+008_low.glb', 'redbull_v7/LOD_Tile_+002_+008_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+002_+008_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+002_+009_low.glb', 'redbull_v7/LOD_Tile_+002_+009_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+002_+009_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+005_+015_low.glb', 'redbull_v7/LOD_Tile_+005_+015_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+005_+015_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+005_+013_low.glb', 'redbull_v7/LOD_Tile_+005_+013_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+005_+013_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+001_+010_low.glb', 'redbull_v7/LOD_Tile_+001_+010_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+001_+010_high.glb');
+
+    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+005_+012_low.glb', 'redbull_v7/LOD_Tile_+005_+012_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+005_+012_high.glb');
 
 
 
