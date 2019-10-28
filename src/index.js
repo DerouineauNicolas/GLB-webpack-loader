@@ -96,7 +96,7 @@ function loadModels() {
 
     var LODManager = new LOD(scene, camera, renderer, params, mouse, loader);
 
-    LODManager.AddBaseLayer('redbull_v4/LOD_Tile_+002_+017_low.glb', 'redbull_v4/LOD_Tile_+002_+017_medium.glb', 2739.4982770425404);
+    LODManager.AddBaseLayer('redbull_v4/LOD_Tile_+002_+017_low.glb', 'redbull_v4/LOD_Tile_+002_+017_medium.glb', 2739.4982770425404, 'redbull_v4/LOD_Tile_+002_+017_high.glb');
 
     //loader.load('redbull_v4/LOD_Tile_+002_+017_low.glb', gltf => MeshonLoad(gltf, loader, scene, camera, renderer, params, mouse, 'redbull_v4/LOD_Tile_+002_+017_medium.glb', 2739.4982770425404, 'redbull_v4/LOD_Tile_+002_+017_high.glb'), onProgress, onError);
 

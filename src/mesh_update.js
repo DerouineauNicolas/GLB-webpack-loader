@@ -20,13 +20,12 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
         var lodposition = new THREE.Vector3();
         lod.up.set(0, 0, 1);
 
-
         var mesh = loadAndMergeMesh(gltf);
 
         mesh.geometry.computeBoundingSphere();
         boundingSphere = mesh.geometry.boundingSphere;
 
-        this.m_camera.position.z = 2 * 2739;
+        this.m_camera.position.z = 2739;
 
         lod.addLevel(mesh, 3 * mesh.geometry.boundingSphere.radius);
         mesh.position.x = -boundingSphere.center.x;
@@ -41,8 +40,42 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
         this.m_scene.add(lod);
     };
 
+    this.monitorDistance = function () {
+
+        console.log("Monitoring distance");
+
+        var cameraposition = new THREE.Vector3();
+
+        cameraposition.x = this.m_camera.position.x;
+        cameraposition.y = this.m_camera.position.y;
+        cameraposition.z = this.m_camera.position.z;
+
+    }
+
+    this.InitEventListener = function () {
+
+        var context = this;
+
+        this.m_renderer.domElement.addEventListener('mousedown', function (event) {
+            //clicked(event);
+            context.monitorDistance();
+            camera.updateMatrixWorld();
+        });
+
+        this.m_renderer.domElement.addEventListener('wheel', function (event) {
+            //console.log("scroll event")
+            context.monitorDistance();
+            //console.log(this);
+            camera.updateMatrixWorld();
+        });
+
+    }
+
+    this.InitEventListener();
 
 }
+
+
 
 function loadAndMergeMesh(gltf) {
 
@@ -77,4 +110,3 @@ LOD.prototype.AddBaseLayer = function (base_layer, medium_layer, LOD_level_mediu
     };
     this.m_loader.load(base_layer, gltf => this.m_InitBaseLayer(gltf, medium_layer, LOD_level_medium_distance, high_layer), onProgress, onError);
 };
-
