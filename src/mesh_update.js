@@ -2,6 +2,15 @@ import { BufferGeometryUtils } from 'three/examples/jsm/utils/BufferGeometryUtil
 import * as THREE from 'three';
 import GLTFLoader from 'three-gltf-loader';
 
+function loadHidherresolution(gltf, lod, level) {
+    var mesh = loadAndMergeMesh(gltf);
+    mesh.geometry.computeBoundingSphere();
+    mesh.position.x = -mesh.geometry.boundingSphere.center.x;
+    mesh.position.y = -mesh.geometry.boundingSphere.center.y;
+    mesh.position.z = -mesh.geometry.boundingSphere.center.z;
+    lod.addLevel(mesh, (level / 4));
+
+}
 
 
 export default function LOD(scene, camera, renderer, params, mouse, loader) {
@@ -11,13 +20,13 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
     this.m_params = params;
     this.m_mouse = mouse;
     this.m_loader = loader;
+    this.m_lodlist = [];
 
-    this.m_InitBaseLayer = function (gltf, LOD_level_medium, LOD_level_medium_distance, high_layer) {
+    this.m_InitBaseLayer = function (gltf, LOD_level_medium, LOD_level_medium_distance, LOD_level_high) {
         var boundingSphere;
 
         var lod = new THREE.LOD();
-        lod.name = LOD_level_medium;
-        var lodposition = new THREE.Vector3();
+        var lod_position = new THREE.Vector3();
         lod.up.set(0, 0, 1);
 
         var mesh = loadAndMergeMesh(gltf);
@@ -27,17 +36,22 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
 
         this.m_camera.position.z = 2739;
 
-        lod.addLevel(mesh, 3 * mesh.geometry.boundingSphere.radius);
+        lod.addLevel(mesh, 3 * LOD_level_medium_distance);
         mesh.position.x = -boundingSphere.center.x;
         mesh.position.y = -boundingSphere.center.y;
         mesh.position.z = -boundingSphere.center.z;
 
-        lod.position.x = lodposition.x = boundingSphere.center.x;
-        lod.position.y = lodposition.y = boundingSphere.center.y;
-        lod.position.z = lodposition.z = boundingSphere.center.z;
+        lod.position.x = lod_position.x = boundingSphere.center.x;
+        lod.position.y = lod_position.y = boundingSphere.center.y;
+        lod.position.z = lod_position.z = boundingSphere.center.z;
         new THREE.Vector3(lod.position.x, lod.position.y, lod.position.y);
 
         this.m_scene.add(lod);
+
+        this.m_lodlist.push({
+            lodinstance: lod, lodposition: lod_position, medium_layer: LOD_level_medium, mediumdistance: LOD_level_medium_distance, high_layer: LOD_level_high, highdistance: boundingSphere
+            , medium_loaded: false, high_loaded: false
+        })
     };
 
     this.monitorDistance = function () {
@@ -45,10 +59,31 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
         console.log("Monitoring distance");
 
         var cameraposition = new THREE.Vector3();
+        var loader = this.m_loader;
 
         cameraposition.x = this.m_camera.position.x;
         cameraposition.y = this.m_camera.position.y;
         cameraposition.z = this.m_camera.position.z;
+
+        this.m_lodlist.forEach(function (element) {
+            console.log(element);
+            if ((!element.high_loaded) | (!element.medium_loaded)) {
+                var distance = cameraposition.distanceTo(element.lodposition);
+                console.log(distance);
+                if (!element.high_loaded && distance < element.highdistance) {
+                    loader.load(element.high_layer, gltf => loadHidherresolution(gltf, element.lodinstance, element.highdistance), null, null);
+                    console.log("Adding high resolution");
+                    element.medium_loaded = true;
+                }
+                if (!element.high_loaded && distance < element.mediumdistance) {
+                    loader.load(element.medium_layer, gltf => loadHidherresolution(gltf, element.lodinstance, element.mediumdistance), null, null);
+                    console.log("Adding medium resolution");
+                    element.medium_loaded = true;
+                }
+
+            }
+
+        });
 
     }
 

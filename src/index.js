@@ -98,14 +98,6 @@ function loadModels() {
 
     LODManager.AddBaseLayer('redbull_v4/LOD_Tile_+002_+017_low.glb', 'redbull_v4/LOD_Tile_+002_+017_medium.glb', 2739.4982770425404, 'redbull_v4/LOD_Tile_+002_+017_high.glb');
 
-    //loader.load('redbull_v4/LOD_Tile_+002_+017_low.glb', gltf => MeshonLoad(gltf, loader, scene, camera, renderer, params, mouse, 'redbull_v4/LOD_Tile_+002_+017_medium.glb', 2739.4982770425404, 'redbull_v4/LOD_Tile_+002_+017_high.glb'), onProgress, onError);
-
-    //loader.load('redbull_v4/LOD_Tile_+003_+018_low.glb', gltf => MeshonLoad(gltf, loader, scene, camera, renderer, params, mouse, 'redbull_v4/LOD_Tile_+003_+018_medium.glb', 2739.4982770425404, 'redbull_v4/LOD_Tile_+003_+018_high.glb'), onProgress, onError);
-
-    //loader.load('redbull_v4/LOD_Tile_+000_+008_low.glb', gltf => MeshonLoad(gltf, loader, scene, camera, renderer, params, mouse, 'redbull_v4/LOD_Tile_+000_+008_medium.glb', 2739.4982770425404, 'redbull_v4/LOD_Tile_+000_+008_high.glb'), onProgress, onError);
-
-    //loader.load('redbull_v4/LOD_Tile_+001_+008_low.glb', gltf => MeshonLoad(gltf, loader, scene, camera, renderer, params, mouse, 'redbull_v4/LOD_Tile_+001_+008_medium.glb', 2739.4982770425404, 'redbull_v4/LOD_Tile_+001_+008_high.glb'), onProgress, onError);
-
 
 
 }
