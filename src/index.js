@@ -6,7 +6,7 @@ const OrbitControls = require('three-orbitcontrols')
 import { MapControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { BufferGeometryUtils } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import { GUI } from 'three/examples/jsm/libs/dat.gui.module.js';
-import LOD from './mesh_update.js'
+import LOD from './lod.js'
 
 var offset_x = 399619;
 var offset_y = 4810459;
