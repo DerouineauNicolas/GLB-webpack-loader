@@ -21,6 +21,7 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
     this.m_mouse = mouse;
     this.m_loader = loader;
     this.m_lodlist = [];
+    this.m_raycaster = new THREE.Raycaster();
 
     this.m_InitBaseLayer = function (gltf, LOD_low_level_distance, LOD_level_medium, LOD_medium_level_distance, LOD_level_high, LOD_high_level_distance) {
         var boundingSphere;
@@ -49,7 +50,7 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
         this.m_scene.add(lod);
 
         this.m_lodlist.push({
-            lodinstance: lod, lodposition: lod_position, medium_layer: LOD_level_medium, mediumdistance: LOD_medium_level_distance, high_layer: LOD_level_high, highdistance: LOD_high_level_distance
+            lodinstance: lod, lodposition: lod_position, lodposition: lod_position, medium_layer: LOD_level_medium, mediumdistance: LOD_medium_level_distance, high_layer: LOD_level_high, highdistance: LOD_high_level_distance
             , medium_loaded: false, high_loaded: false
         })
     };
@@ -82,8 +83,39 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
                 }
 
             }
-
         });
+
+        if (this.m_params.enableRaytracing) {
+
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+            var raycaster = this.m_raycaster;
+            raycaster.setFromCamera(mouse, camera);
+            this.m_lodlist.forEach(function (element) {
+                var intersects = raycaster.intersectObject(element.lodinstance, true);
+
+                console.log(intersects.length)
+
+                if (intersects.length > 0) {
+
+                    var target = {
+                        x: intersects[0].point.x,
+                        y: intersects[0].point.y,
+                        z: intersects[0].point.z
+                    }
+
+                    var geometry = new THREE.BoxBufferGeometry(element.highdistance / 10, element.highdistance / 10, element.highdistance / 10);
+                    var material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+                    var mesh = new THREE.Mesh(geometry, material);
+                    mesh.position.set(target.x, target.y, target.z);
+                    console.log("Adding geometry");
+                    scene.add(mesh);
+                }
+            });
+
+
+        }
+
 
     }
 
