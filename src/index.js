@@ -57,6 +57,7 @@ function init() {
     camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 20000);
     //camera = new THREE.OrthographicCamera( window.innerWidth / - 2,  window.innerWidth  / 2, window.innerHeight / 2, window.innerHeight / - 2, 1, 1000 );
     camera.up.set(0, 0, 1);
+    camera.position.z = 5478.996554085081;
 
     var size = 10;
     var divisions = 10;
@@ -96,133 +97,133 @@ function loadModels() {
 
     var LODManager = new LOD(scene, camera, renderer, params, mouse, loader);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+002_+017_low.glb', 'redbull_v7/LOD_Tile_+002_+017_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+002_+017_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+002_+017_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+002_+017_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+002_+017_high.glb', 20.41944762123676);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+003_+018_low.glb', 'redbull_v7/LOD_Tile_+003_+018_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+003_+018_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+003_+018_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+003_+018_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+003_+018_high.glb', 49.720226357556925);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+000_+008_low.glb', 'redbull_v7/LOD_Tile_+000_+008_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+000_+008_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+000_+008_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+000_+008_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+000_+008_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+001_+008_low.glb', 'redbull_v7/LOD_Tile_+001_+008_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+001_+008_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+002_+016_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+002_+016_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+002_+016_high.glb', 78.94025471055373);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+002_+016_low.glb', 'redbull_v7/LOD_Tile_+002_+016_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+002_+016_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+001_+008_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+001_+008_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+001_+008_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+001_+009_low.glb', 'redbull_v7/LOD_Tile_+001_+009_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+001_+009_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+001_+009_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+001_+009_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+001_+009_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+000_+014_low.glb', 'redbull_v7/LOD_Tile_+000_+014_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+000_+014_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+002_+010_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+002_+010_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+002_+010_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+002_+010_low.glb', 'redbull_v7/LOD_Tile_+002_+010_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+002_+010_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+000_+014_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+000_+014_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+000_+014_high.glb', 13.496224665538351);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+003_+011_low.glb', 'redbull_v7/LOD_Tile_+003_+011_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+003_+011_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+003_+011_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+003_+011_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+003_+011_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+000_+009_low.glb', 'redbull_v7/LOD_Tile_+000_+009_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+000_+009_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+003_+016_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+003_+016_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+003_+016_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+000_+013_low.glb', 'redbull_v7/LOD_Tile_+000_+013_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+000_+013_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+003_+010_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+003_+010_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+003_+010_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+003_+010_low.glb', 'redbull_v7/LOD_Tile_+003_+010_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+003_+010_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+000_+009_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+000_+009_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+000_+009_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+003_+017_low.glb', 'redbull_v7/LOD_Tile_+003_+017_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+003_+017_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+003_+017_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+003_+017_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+003_+017_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+003_+016_low.glb', 'redbull_v7/LOD_Tile_+003_+016_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+003_+016_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+000_+013_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+000_+013_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+000_+013_high.glb', 67.9911360609271);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+002_+011_low.glb', 'redbull_v7/LOD_Tile_+002_+011_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+002_+011_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+002_+011_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+002_+011_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+002_+011_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+004_+019_low.glb', 'redbull_v7/LOD_Tile_+004_+019_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+004_+019_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+004_+019_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+004_+019_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+004_+019_high.glb', 58.40144677436389);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+004_+011_low.glb', 'redbull_v7/LOD_Tile_+004_+011_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+004_+011_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+001_+015_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+001_+015_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+001_+015_high.glb', 40.368061578616036);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+001_+015_low.glb', 'redbull_v7/LOD_Tile_+001_+015_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+001_+015_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+004_+011_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+004_+011_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+004_+011_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+004_+018_low.glb', 'redbull_v7/LOD_Tile_+004_+018_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+004_+018_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+004_+016_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+004_+016_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+004_+016_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+004_+016_low.glb', 'redbull_v7/LOD_Tile_+004_+016_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+004_+016_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+004_+018_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+004_+018_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+004_+018_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+000_+012_low.glb', 'redbull_v7/LOD_Tile_+000_+012_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+000_+012_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+000_+012_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+000_+012_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+000_+012_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+005_+021_low.glb', 'redbull_v7/LOD_Tile_+005_+021_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+005_+021_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+005_+021_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+005_+021_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+005_+021_high.glb', 47.56326146896684);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+005_+010_low.glb', 'redbull_v7/LOD_Tile_+005_+010_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+005_+010_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+005_+010_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+005_+010_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+005_+010_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+004_+017_low.glb', 'redbull_v7/LOD_Tile_+004_+017_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+004_+017_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+004_+017_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+004_+017_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+004_+017_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+004_+010_low.glb', 'redbull_v7/LOD_Tile_+004_+010_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+004_+010_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+005_+020_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+005_+020_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+005_+020_high.glb', 55.34421419766719);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+005_+019_low.glb', 'redbull_v7/LOD_Tile_+005_+019_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+005_+019_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+004_+010_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+004_+010_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+004_+010_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+005_+020_low.glb', 'redbull_v7/LOD_Tile_+005_+020_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+005_+020_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+005_+017_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+005_+017_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+005_+017_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+005_+017_low.glb', 'redbull_v7/LOD_Tile_+005_+017_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+005_+017_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+005_+019_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+005_+019_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+005_+019_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+001_+012_low.glb', 'redbull_v7/LOD_Tile_+001_+012_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+001_+012_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+005_+018_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+005_+018_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+005_+018_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+005_+018_low.glb', 'redbull_v7/LOD_Tile_+005_+018_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+005_+018_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+001_+012_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+001_+012_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+001_+012_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+001_+014_low.glb', 'redbull_v7/LOD_Tile_+001_+014_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+001_+014_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+001_+014_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+001_+014_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+001_+014_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+001_+013_low.glb', 'redbull_v7/LOD_Tile_+001_+013_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+001_+013_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+005_+016_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+005_+016_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+005_+016_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+005_+016_low.glb', 'redbull_v7/LOD_Tile_+005_+016_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+005_+016_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+001_+013_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+001_+013_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+001_+013_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+005_+009_low.glb', 'redbull_v7/LOD_Tile_+005_+009_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+005_+009_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+002_+014_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+002_+014_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+002_+014_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+005_+011_low.glb', 'redbull_v7/LOD_Tile_+005_+011_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+005_+011_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+005_+009_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+005_+009_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+005_+009_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+002_+014_low.glb', 'redbull_v7/LOD_Tile_+002_+014_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+002_+014_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+005_+011_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+005_+011_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+005_+011_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+002_+013_low.glb', 'redbull_v7/LOD_Tile_+002_+013_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+002_+013_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+002_+013_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+002_+013_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+002_+013_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+002_+015_low.glb', 'redbull_v7/LOD_Tile_+002_+015_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+002_+015_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+002_+015_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+002_+015_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+002_+015_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+002_+012_low.glb', 'redbull_v7/LOD_Tile_+002_+012_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+002_+012_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+002_+012_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+002_+012_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+002_+012_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+003_+007_low.glb', 'redbull_v7/LOD_Tile_+003_+007_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+003_+007_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+003_+007_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+003_+007_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+003_+007_high.glb', 65.16931938314643);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+004_+009_low.glb', 'redbull_v7/LOD_Tile_+004_+009_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+004_+009_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+004_+009_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+004_+009_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+004_+009_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+004_+008_low.glb', 'redbull_v7/LOD_Tile_+004_+008_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+004_+008_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+004_+008_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+004_+008_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+004_+008_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+003_+012_low.glb', 'redbull_v7/LOD_Tile_+003_+012_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+003_+012_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+003_+012_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+003_+012_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+003_+012_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+003_+015_low.glb', 'redbull_v7/LOD_Tile_+003_+015_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+003_+015_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+003_+015_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+003_+015_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+003_+015_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+000_+010_low.glb', 'redbull_v7/LOD_Tile_+000_+010_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+000_+010_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+000_+010_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+000_+010_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+000_+010_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+003_+014_low.glb', 'redbull_v7/LOD_Tile_+003_+014_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+003_+014_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+003_+014_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+003_+014_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+003_+014_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+004_+015_low.glb', 'redbull_v7/LOD_Tile_+004_+015_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+004_+015_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+003_+013_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+003_+013_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+003_+013_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+003_+013_low.glb', 'redbull_v7/LOD_Tile_+003_+013_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+003_+013_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+004_+015_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+004_+015_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+004_+015_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+005_+022_low.glb', 'redbull_v7/LOD_Tile_+005_+022_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+005_+022_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+004_+012_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+004_+012_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+004_+012_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+003_+009_low.glb', 'redbull_v7/LOD_Tile_+003_+009_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+003_+009_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+003_+008_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+003_+008_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+003_+008_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+004_+012_low.glb', 'redbull_v7/LOD_Tile_+004_+012_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+004_+012_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+005_+022_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+005_+022_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+005_+022_high.glb', 6.8444654875062865);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+003_+008_low.glb', 'redbull_v7/LOD_Tile_+003_+008_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+003_+008_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+003_+009_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+003_+009_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+003_+009_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+000_+011_low.glb', 'redbull_v7/LOD_Tile_+000_+011_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+000_+011_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+000_+011_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+000_+011_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+000_+011_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+005_+014_low.glb', 'redbull_v7/LOD_Tile_+005_+014_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+005_+014_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+005_+014_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+005_+014_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+005_+014_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+004_+013_low.glb', 'redbull_v7/LOD_Tile_+004_+013_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+004_+013_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+004_+013_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+004_+013_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+004_+013_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+001_+011_low.glb', 'redbull_v7/LOD_Tile_+001_+011_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+001_+011_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+002_+007_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+002_+007_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+002_+007_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+004_+014_low.glb', 'redbull_v7/LOD_Tile_+004_+014_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+004_+014_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+004_+014_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+004_+014_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+004_+014_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+002_+007_low.glb', 'redbull_v7/LOD_Tile_+002_+007_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+002_+007_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+001_+011_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+001_+011_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+001_+011_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+002_+008_low.glb', 'redbull_v7/LOD_Tile_+002_+008_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+002_+008_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+002_+008_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+002_+008_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+002_+008_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+002_+009_low.glb', 'redbull_v7/LOD_Tile_+002_+009_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+002_+009_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+002_+009_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+002_+009_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+002_+009_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+005_+015_low.glb', 'redbull_v7/LOD_Tile_+005_+015_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+005_+015_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+005_+013_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+005_+013_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+005_+013_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+005_+013_low.glb', 'redbull_v7/LOD_Tile_+005_+013_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+005_+013_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+005_+015_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+005_+015_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+005_+015_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+001_+010_low.glb', 'redbull_v7/LOD_Tile_+001_+010_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+001_+010_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+001_+010_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+001_+010_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+001_+010_high.glb', 93.86299048639616);
 
-    LODManager.AddBaseLayer('redbull_v7/LOD_Tile_+005_+012_low.glb', 'redbull_v7/LOD_Tile_+005_+012_medium.glb', 2739.4982770425404, 'redbull_v7/LOD_Tile_+005_+012_high.glb');
+    LODManager.AddBaseLayer('test_distance/LOD_Tile_+005_+012_low.glb', 5478.996554085081, 'test_distance/LOD_Tile_+005_+012_medium.glb', 2739.4982770425404, 'test_distance/LOD_Tile_+005_+012_high.glb', 93.86299048639616);
 
 
 

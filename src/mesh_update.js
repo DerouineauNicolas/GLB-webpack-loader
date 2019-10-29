@@ -22,7 +22,7 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
     this.m_loader = loader;
     this.m_lodlist = [];
 
-    this.m_InitBaseLayer = function (gltf, LOD_level_medium, LOD_level_medium_distance, LOD_level_high) {
+    this.m_InitBaseLayer = function (gltf, LOD_low_level_distance, LOD_level_medium, LOD_medium_level_distance, LOD_level_high, LOD_high_level_distance) {
         var boundingSphere;
 
         var lod = new THREE.LOD();
@@ -34,9 +34,9 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
         mesh.geometry.computeBoundingSphere();
         boundingSphere = mesh.geometry.boundingSphere;
 
-        this.m_camera.position.z = 2739;
 
-        lod.addLevel(mesh, 3 * LOD_level_medium_distance);
+
+        lod.addLevel(mesh, LOD_low_level_distance);
         mesh.position.x = -boundingSphere.center.x;
         mesh.position.y = -boundingSphere.center.y;
         mesh.position.z = -boundingSphere.center.z;
@@ -49,7 +49,7 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
         this.m_scene.add(lod);
 
         this.m_lodlist.push({
-            lodinstance: lod, lodposition: lod_position, medium_layer: LOD_level_medium, mediumdistance: LOD_level_medium_distance, high_layer: LOD_level_high, highdistance: boundingSphere.radius
+            lodinstance: lod, lodposition: lod_position, medium_layer: LOD_level_medium, mediumdistance: LOD_medium_level_distance, high_layer: LOD_level_high, highdistance: LOD_high_level_distance
             , medium_loaded: false, high_loaded: false
         })
     };
@@ -69,7 +69,7 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
             //console.log(element);
             if ((!element.high_loaded) | (!element.medium_loaded)) {
                 var distance = cameraposition.distanceTo(element.lodposition);
-                //console.log(distance);
+                console.log(distance);
                 if (!element.high_loaded && distance < element.highdistance) {
                     loader.load(element.high_layer, gltf => loadHidherresolution(gltf, element.lodinstance, element.highdistance), null, null);
                     console.log("Adding high resolution");
@@ -137,11 +137,12 @@ function loadAndMergeMesh(gltf) {
     return mesh;
 }
 
-LOD.prototype.AddBaseLayer = function (base_layer, medium_layer, LOD_level_medium_distance, high_layer) {
+LOD.prototype.AddBaseLayer = function (base_layer, LOD_low_level_distance, medium_layer, LOD_medium_level_distance, high_layer, LOD_high_level_distance) {
     const onProgress = () => { };
 
     const onError = (errorMessage) => {
+        console.log("Eror while loading tile " + base_layer);
         console.log(errorMessage);
     };
-    this.m_loader.load(base_layer, gltf => this.m_InitBaseLayer(gltf, medium_layer, LOD_level_medium_distance, high_layer), onProgress, onError);
+    this.m_loader.load(base_layer, gltf => this.m_InitBaseLayer(gltf, LOD_low_level_distance, medium_layer, LOD_medium_level_distance, high_layer, LOD_high_level_distance), onProgress, onError);
 };
