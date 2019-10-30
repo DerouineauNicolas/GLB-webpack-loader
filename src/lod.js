@@ -9,6 +9,8 @@ function loadHidherresolution(gltf, lod, level) {
     mesh.position.y = -mesh.geometry.boundingSphere.center.y;
     mesh.position.z = -mesh.geometry.boundingSphere.center.z;
     lod.addLevel(mesh, (level));
+    mesh.geometry.dispose();
+    //mesh.material.dispose();
 
 }
 
@@ -35,9 +37,10 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
         mesh.geometry.computeBoundingSphere();
         boundingSphere = mesh.geometry.boundingSphere;
 
-
+        camera.position.z = LOD_low_level_distance;
 
         lod.addLevel(mesh, LOD_low_level_distance);
+
         mesh.position.x = -boundingSphere.center.x;
         mesh.position.y = -boundingSphere.center.y;
         mesh.position.z = -boundingSphere.center.z;
@@ -48,6 +51,8 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
         new THREE.Vector3(lod.position.x, lod.position.y, lod.position.y);
 
         this.m_scene.add(lod);
+
+        mesh.geometry.dispose();
 
         this.m_lodlist.push({
             lodinstance: lod, lodposition: lod_position, lodposition: lod_position, medium_layer: LOD_level_medium, mediumdistance: LOD_medium_level_distance, high_layer: LOD_level_high, highdistance: LOD_high_level_distance
@@ -70,7 +75,7 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
             //console.log(element);
             if ((!element.high_loaded) | (!element.medium_loaded)) {
                 var distance = cameraposition.distanceTo(element.lodposition);
-                console.log(distance);
+                //console.log(distance);
                 if (!element.high_loaded && distance < element.highdistance) {
                     loader.load(element.high_layer, gltf => loadHidherresolution(gltf, element.lodinstance, element.highdistance), null, null);
                     console.log("Adding high resolution");
@@ -84,6 +89,8 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
 
             }
         });
+
+
 
         if (this.m_params.enableRaytracing) {
 
@@ -157,6 +164,7 @@ function loadAndMergeMesh(gltf) {
 
             geometries.push(geometry);
             materials.push(material);
+            material.dispose();
         }
 
     });
@@ -165,6 +173,9 @@ function loadAndMergeMesh(gltf) {
     var material = new THREE.MultiMaterial(materials);
     material.wireframe = true;
     var mesh = new THREE.Mesh(geometry, material);
+
+    geometry.dispose();
+    //material.dispose();
 
     return mesh;
 }
