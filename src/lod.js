@@ -74,7 +74,16 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
         cameraposition.y = this.m_camera.position.y;
         cameraposition.z = this.m_camera.position.z;
 
-        //console.log(this.m_renderer.info)
+        var removemeshFromLod = function (lod, mesh, distance) {
+            var object = lod.getObjectForDistance(distance);
+            object.geometry.dispose();
+            lod.remove(object);
+            object = null;
+            //scene.remove(object);
+            lod.levels.shift();
+            lod.levels[0].object.visible = true;
+
+        };
 
         this.m_lodlist.forEach(function (element) {
             //console.log(element);
@@ -89,23 +98,21 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
 
                 } else if (element.high_loaded && (distance > element.highdistance)) {
                     if (element.high_level_instance_uuid) {
-                        var object = element.lodinstance.getObjectForDistance(element.highdistance);
-                        object.geometry.dispose();
-                        element.lodinstance.remove(object);
-                        scene.remove(object);
-                        element.lodinstance.levels.shift();
-                        element.lodinstance.levels[0].object.visible = true;
-                        console.log(scene);
-                        object = null;
+                        removemeshFromLod(element.lodinstance, null, element.highdistance);
                         element.high_loaded = false;
                         element.lodinstance.update();
-
                     }
                 }
                 if (!element.medium_loaded && distance < element.mediumdistance) {
-                    loader.load(element.medium_layer, gltf => loadHidherresolution(gltf, element.lodinstance, element.mediumdistance), null, null);
+                    loader.load(element.medium_layer, gltf => { element.medium_level_instance_uuid = loadHidherresolution(gltf, element.lodinstance, element.highdistance); }, null, null);
                     console.log("Adding medium resolution");
                     element.medium_loaded = true;
+                } else if (element.medium_loaded && (distance > element.mediumdistance)) {
+                    if (element.medium_level_instance_uuid) {
+                        removemeshFromLod(element.lodinstance, null, element.mediumdistance);
+                        element.medium_loaded = false;
+                        element.lodinstance.update();
+                    }
                 }
 
             }
