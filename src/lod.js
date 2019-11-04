@@ -2,14 +2,15 @@ import { BufferGeometryUtils } from 'three/examples/jsm/utils/BufferGeometryUtil
 import * as THREE from 'three';
 import GLTFLoader from 'three-gltf-loader';
 
-function loadHidherresolution(gltf, lod, level) {
+function loadHidherresolution(gltf, lod, level, instance) {
     var mesh = loadAndMergeMesh(gltf);
     mesh.geometry.computeBoundingSphere();
     mesh.position.x = -mesh.geometry.boundingSphere.center.x;
     mesh.position.y = -mesh.geometry.boundingSphere.center.y;
     mesh.position.z = -mesh.geometry.boundingSphere.center.z;
     lod.addLevel(mesh, (level));
-    mesh.geometry.dispose();
+    //mesh.geometry.dispose();
+    return mesh.id;
     //mesh.material.dispose();
 
 }
@@ -39,7 +40,7 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
 
         camera.position.z = LOD_low_level_distance;
 
-        lod.addLevel(mesh, LOD_low_level_distance);
+        lod.addLevel(mesh, LOD_medium_level_distance + 1);
 
         mesh.position.x = -boundingSphere.center.x;
         mesh.position.y = -boundingSphere.center.y;
@@ -56,30 +57,50 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
 
         this.m_lodlist.push({
             lodinstance: lod, lodposition: lod_position, lodposition: lod_position, medium_layer: LOD_level_medium, mediumdistance: LOD_medium_level_distance, high_layer: LOD_level_high, highdistance: LOD_high_level_distance
-            , medium_loaded: false, high_loaded: false
+            , medium_loaded: false, high_loaded: false, high_level_instance_uuid: null, medium_level_instance_uuid: null
         })
     };
 
     this.monitorDistance = function () {
 
-        console.log("Monitoring distance");
+        //console.log("Monitoring distance");
 
         var cameraposition = new THREE.Vector3();
         var loader = this.m_loader;
+        var scene = this.m_scene;
+        var renderer = this.m_renderer;
 
         cameraposition.x = this.m_camera.position.x;
         cameraposition.y = this.m_camera.position.y;
         cameraposition.z = this.m_camera.position.z;
 
+        //console.log(this.m_renderer.info)
+
         this.m_lodlist.forEach(function (element) {
             //console.log(element);
-            if ((!element.high_loaded) | (!element.medium_loaded)) {
+            if (1) {
                 var distance = cameraposition.distanceTo(element.lodposition);
                 //console.log(distance);
                 if (!element.high_loaded && distance < element.highdistance) {
-                    loader.load(element.high_layer, gltf => loadHidherresolution(gltf, element.lodinstance, element.highdistance), null, null);
+                    console.log(renderer.info);
+                    loader.load(element.high_layer, gltf => { element.high_level_instance_uuid = loadHidherresolution(gltf, element.lodinstance, element.highdistance); }, null, null);
                     console.log("Adding high resolution");
                     element.high_loaded = true;
+
+                } else if (element.high_loaded && (distance > element.highdistance)) {
+                    if (element.high_level_instance_uuid) {
+                        var object = element.lodinstance.getObjectForDistance(element.highdistance);
+                        object.geometry.dispose();
+                        element.lodinstance.remove(object);
+                        scene.remove(object);
+                        element.lodinstance.levels.shift();
+                        element.lodinstance.levels[0].object.visible = true;
+                        console.log(scene);
+                        object = null;
+                        element.high_loaded = false;
+                        element.lodinstance.update();
+
+                    }
                 }
                 if (!element.medium_loaded && distance < element.mediumdistance) {
                     loader.load(element.medium_layer, gltf => loadHidherresolution(gltf, element.lodinstance, element.mediumdistance), null, null);
@@ -165,9 +186,16 @@ function loadAndMergeMesh(gltf) {
             geometries.push(geometry);
             materials.push(material);
             material.dispose();
+            geometry.dispose();
+            child.geometry.dispose();
+            child.material.dispose();
+            geometry = null;
+            material = null;
         }
 
     });
+
+    gltf = null;
 
     var geometry = BufferGeometryUtils.mergeBufferGeometries(geometries, true);
     var material = new THREE.MultiMaterial(materials);
