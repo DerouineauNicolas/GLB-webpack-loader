@@ -2,14 +2,14 @@ import { BufferGeometryUtils } from 'three/examples/jsm/utils/BufferGeometryUtil
 import * as THREE from 'three';
 import GLTFLoader from 'three-gltf-loader';
 
-function loadHidherresolution(gltf, lod, level, instance) {
+function loadHidherresolution(gltf, lod, level) {
     var mesh = loadAndMergeMesh(gltf);
     mesh.geometry.computeBoundingSphere();
     mesh.position.x = -mesh.geometry.boundingSphere.center.x;
     mesh.position.y = -mesh.geometry.boundingSphere.center.y;
     mesh.position.z = -mesh.geometry.boundingSphere.center.z;
     lod.addLevel(mesh, (level));
-    console.log(lod);
+    //console.log(lod);
     //mesh.geometry.dispose();
     return mesh.id;
     //mesh.material.dispose();
@@ -42,7 +42,7 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
         camera.position.z = LOD_low_level_distance;
 
         lod.addLevel(mesh, LOD_low_level_distance + 1);
-        console.log(lod);
+        //console.log(lod);
 
         mesh.position.x = -boundingSphere.center.x;
         mesh.position.y = -boundingSphere.center.y;
@@ -78,8 +78,8 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
         cameraposition.z = this.m_camera.position.z;
 
         var removemeshFromLod = function (lod, mesh, distance) {
-            //console.log("removemeshFromLod");
-            //console.log(lod.levels.length);
+            console.log("removemeshFromLod");
+            //console.log(lod);
             if (lod.levels.length > 1) {
                 var object = lod.getObjectForDistance(distance);
                 //console.log(object);
