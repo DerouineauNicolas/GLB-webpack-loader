@@ -13,6 +13,59 @@ function loadHidherresolution(gltf, lod, level) {
 
 }
 
+function deleteobj(object) {
+
+    object.traverse(function (obj) {
+        var material = null;
+        if (obj.material[0])
+            material = obj.material[0];
+        else
+            material = obj.material;
+        if (material) {
+            material.dispose();
+            if (material.map) {
+                material.map.dispose();
+            }
+            if (material.lightMap) {
+                material.lightMap.dispose();
+            }
+            if (material.aoMap) {
+                material.aoMap.dispose();
+            }
+            if (material.emissiveMap) {
+                material.emissiveMap.dispose();
+            }
+            if (material.bumpMap) {
+                material.bumpMap.dispose();
+            }
+            if (material.normalMap) {
+                material.normalMap.dispose();
+            }
+            if (material.displacementMap) {
+                material.displacementMap.dispose();
+            }
+            if (material.roughnessMap) {
+                material.roughnessMap.dispose();
+            }
+            if (material.metalnessMap) {
+                material.metalnessMap.dispose();
+            }
+            if (material.alphaMap) {
+                material.alphaMap.dispose();
+            }
+        }
+        if (obj.geometry) {
+            obj.geometry.dispose();
+            obj.geometry.attributes.color = {};
+            obj.geometry.attributes.normal = {};
+            obj.geometry.attributes.position = {};
+            obj.geometry.attributes.uv = {};
+            obj.geometry.attributes = {};
+            obj.material = {};
+        }
+    })
+}
+
 
 export default function LOD(scene, camera, renderer, params, mouse, loader) {
     this.m_scene = scene;
@@ -38,8 +91,7 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
 
         camera.position.z = LOD_low_level_distance;
 
-        lod.addLevel(mesh, LOD_low_level_distance + 1);
-        //console.log(lod);
+        lod.addLevel(mesh, LOD_medium_level_distance + 1);
 
         mesh.position.x = -boundingSphere.center.x;
         mesh.position.y = -boundingSphere.center.y;
@@ -52,13 +104,12 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
 
         this.m_scene.add(lod);
 
-        mesh.geometry.dispose();
-
         this.m_lodlist.push({
             lodinstance: lod, lodposition: lod_position, lodposition: lod_position, medium_layer: LOD_level_medium, mediumdistance: LOD_medium_level_distance, high_layer: LOD_level_high, highdistance: LOD_high_level_distance
             , medium_loaded: false, high_loaded: false, high_level_instance_uuid: null, medium_level_instance_uuid: null
         })
     };
+
 
     this.monitorDistance = function () {
 
@@ -76,16 +127,9 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
             console.log("removemeshFromLod");
             if (lod.levels.length > 1) {
                 var object = lod.getObjectForDistance(distance);
+                //lod.remove(object);
+                deleteobj(object);
                 lod.remove(object);
-                object.geometry.dispose();
-                object.geometry.attributes.color = {};
-                object.geometry.attributes.normal = {};
-                object.geometry.attributes.position = {};
-                object.geometry.attributes.uv = {};
-                object.geometry.attributes = {};
-                object.material[0].map.dispose();
-                object.material = {};
-                object = null;
                 lod.levels.shift();
                 lod.levels[0].object.visible = true;
             } else {
@@ -102,13 +146,14 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
                 if (!element.high_loaded && distance < element.highdistance) {
                     //console.log(renderer.info);
                     loader.load(element.high_layer, gltf => { element.high_level_instance_uuid = loadHidherresolution(gltf, element.lodinstance, element.highdistance); }, null, null);
-                    //console.log("Adding high resolution");
+                    console.log("Adding high resolution");
                     element.high_loaded = true;
 
                 } else if (element.high_loaded && (distance > element.highdistance)) {
                     if (element.high_level_instance_uuid) {
                         removemeshFromLod(element.lodinstance, null, element.highdistance);
                         element.high_loaded = false;
+                        element.high_level_instance_uuid = null;
                         element.lodinstance.update(camera);
                     }
                 }
@@ -121,6 +166,7 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
                     if (element.medium_level_instance_uuid) {
                         removemeshFromLod(element.lodinstance, null, element.mediumdistance);
                         element.medium_loaded = false;
+                        element.medium_level_instance_uuid = null;
                         element.lodinstance.update(camera);
                     }
                 }
