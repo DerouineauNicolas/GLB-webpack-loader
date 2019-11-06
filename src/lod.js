@@ -13,6 +13,21 @@ function loadHidherresolution(gltf, lod, level) {
 
 }
 
+function removemeshFromLod(lod, mesh, distance) {
+    console.log("removemeshFromLod");
+    if (lod.levels.length > 1) {
+        var object = lod.getObjectForDistance(distance);
+        //lod.remove(object);
+        deleteobj(object);
+        lod.remove(object);
+        lod.levels.shift();
+        lod.levels[0].object.visible = true;
+    } else {
+        console.log("ERROR: Attempt to remove mesh on lod with length" + lod.levels.length);
+    }
+
+};
+
 function deleteobj(object) {
 
     object.traverse(function (obj) {
@@ -105,7 +120,7 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
         this.m_scene.add(lod);
 
         this.m_lodlist.push({
-            lodinstance: lod, lodposition: lod_position, lodposition: lod_position, medium_layer: LOD_level_medium, mediumdistance: LOD_medium_level_distance, high_layer: LOD_level_high, highdistance: LOD_high_level_distance
+            lodinstance: lod, lodposition: lod_position, medium_layer: LOD_level_medium, mediumdistance: LOD_medium_level_distance, high_layer: LOD_level_high, highdistance: LOD_high_level_distance
             , medium_loaded: false, high_loaded: false, high_level_instance_uuid: null, medium_level_instance_uuid: null
         })
     };
@@ -123,27 +138,18 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
         cameraposition.y = this.m_camera.position.y;
         cameraposition.z = this.m_camera.position.z;
 
-        var removemeshFromLod = function (lod, mesh, distance) {
-            console.log("removemeshFromLod");
-            if (lod.levels.length > 1) {
-                var object = lod.getObjectForDistance(distance);
-                //lod.remove(object);
-                deleteobj(object);
-                lod.remove(object);
-                lod.levels.shift();
-                lod.levels[0].object.visible = true;
-            } else {
-                console.log("ERROR: Attempt to remove mesh on lod with length" + lod.levels.length);
-            }
+        var frustum = new THREE.Frustum();
+        frustum.setFromMatrix(new THREE.Matrix4().multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse));
 
-        };
 
         this.m_lodlist.forEach(function (element) {
+            //console.log(element.lodposition);
             //console.log(element);
             if (1) {
                 var distance = cameraposition.distanceTo(element.lodposition);
+                var containslod = frustum.containsPoint(element.lodposition);
                 //console.log(distance);
-                if (!element.high_loaded && distance < element.highdistance) {
+                if (!element.high_loaded && distance < element.highdistance && containslod) {
                     //console.log(renderer.info);
                     loader.load(element.high_layer, gltf => { element.high_level_instance_uuid = loadHidherresolution(gltf, element.lodinstance, element.highdistance); }, null, null);
                     console.log("Adding high resolution");
@@ -157,7 +163,7 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
                         element.lodinstance.update(camera);
                     }
                 }
-                if (!element.medium_loaded && distance < element.mediumdistance) {
+                if (!element.medium_loaded && distance < element.mediumdistance && containslod) {
                     loader.load(element.medium_layer, gltf => { element.medium_level_instance_uuid = loadHidherresolution(gltf, element.lodinstance, element.mediumdistance); }, null, null);
                     console.log("Adding medium resolution");
                     element.medium_loaded = true;
@@ -264,8 +270,6 @@ function loadAndMergeMesh(gltf) {
     var mesh = new THREE.Mesh(geometry, materials);
 
     geometry.dispose();
-    //console.log(material)
-    //material.dispose();
 
     return mesh;
 }
