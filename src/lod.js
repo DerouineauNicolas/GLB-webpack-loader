@@ -9,10 +9,7 @@ function loadHidherresolution(gltf, lod, level) {
     mesh.position.y = -mesh.geometry.boundingSphere.center.y;
     mesh.position.z = -mesh.geometry.boundingSphere.center.z;
     lod.addLevel(mesh, (level));
-    //console.log(lod);
-    //mesh.geometry.dispose();
     return mesh.id;
-    //mesh.material.dispose();
 
 }
 
@@ -65,8 +62,6 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
 
     this.monitorDistance = function () {
 
-        //console.log("Monitoring distance");
-
         var cameraposition = new THREE.Vector3();
         var loader = this.m_loader;
         var scene = this.m_scene;
@@ -79,22 +74,22 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
 
         var removemeshFromLod = function (lod, mesh, distance) {
             console.log("removemeshFromLod");
-            //console.log(lod);
             if (lod.levels.length > 1) {
                 var object = lod.getObjectForDistance(distance);
-                //console.log(object);
-
-
-                //console.log(object.material[0])
-
                 lod.remove(object);
                 object.geometry.dispose();
+                object.geometry.attributes.color = {};
+                object.geometry.attributes.normal = {};
+                object.geometry.attributes.position = {};
+                object.geometry.attributes.uv = {};
+                object.geometry.attributes = {};
                 object.material[0].map.dispose();
+                object.material = {};
                 object = null;
-                //scene.remove(object);
                 lod.levels.shift();
                 lod.levels[0].object.visible = true;
-                //console.log(lod);
+            } else {
+                console.log("ERROR: Attempt to remove mesh on lod with length" + lod.levels.length);
             }
 
         };
