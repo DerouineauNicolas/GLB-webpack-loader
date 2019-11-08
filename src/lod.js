@@ -1,6 +1,6 @@
 import { BufferGeometryUtils } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import * as THREE from 'three';
-import GLTFLoader from 'three-gltf-loader';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 
 function loadHidherresolution(gltf, lod, level) {
     var mesh = loadAndMergeMesh(gltf);
@@ -88,9 +88,21 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
     this.m_renderer = renderer;
     this.m_params = params;
     this.m_mouse = mouse;
-    this.m_loader = loader;
+
     this.m_lodlist = [];
     this.m_raycaster = new THREE.Raycaster();
+
+
+    // Optional: Provide a DRACOLoader instance to decode compressed mesh data
+    // Configure and create Draco decoder.
+    var dracoLoader = new DRACOLoader();
+    console.log(dracoLoader);
+    //dracoLoader.setDecoderPath('.');
+    //dracoLoader.setDecoderConfig({ type: 'wasm' });
+    console.log(dracoLoader);
+
+    loader.setDRACOLoader(dracoLoader);
+    this.m_loader = loader;
 
     this.m_InitBaseLayer = function (gltf, LOD_low_level_distance, LOD_level_medium, LOD_medium_level_distance, LOD_level_high, LOD_high_level_distance) {
         var boundingSphere;
@@ -275,11 +287,14 @@ function loadAndMergeMesh(gltf) {
 }
 
 LOD.prototype.AddBaseLayer = function (base_layer, LOD_low_level_distance, medium_layer, LOD_medium_level_distance, high_layer, LOD_high_level_distance) {
-    const onProgress = () => { };
+    const onProgress = (xhr) => {
+        console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+    };
 
     const onError = (errorMessage) => {
         console.log("Eror while loading tile " + base_layer);
         console.log(errorMessage);
     };
+
     this.m_loader.load(base_layer, gltf => this.m_InitBaseLayer(gltf, LOD_low_level_distance, medium_layer, LOD_medium_level_distance, high_layer, LOD_high_level_distance), onProgress, onError);
 };
