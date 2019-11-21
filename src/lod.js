@@ -132,13 +132,18 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
 
         this.m_scene.add(lod);
 
-        var lod_levels;
+        var lod_levels = [];
+
+        console.log(higher_lods);
 
         for (var i = 0; i < num_higher_lods; i++) {
             lod_levels.push({
-                glblayer: higher_lods[(i / 2)], distance: higher_lods[(i / 2) + 1], isloaded: false, index: i
+                glblayer: higher_lods[(i / 2)], distance: higher_lods[(i / 2) + 1], isloaded: false, index: i, instanceuuid: null
             })
         }
+
+        console.log("init lod_levels");
+        console.log(lod_levels);
 
         this.m_lodlist.push({
             lodinstance: lod, lodposition: lod_position, lodlevels: lod_levels
@@ -162,43 +167,30 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
         frustum.setFromMatrix(new THREE.Matrix4().multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse));
 
 
-        this.m_lodlist.forEach(function (element) {
-            //console.log(element.lodposition);
-            //console.log(element);
-            /*if (1) {
-                var distance = cameraposition.distanceTo(element.lodposition);
-                var containslod = frustum.containsPoint(element.lodposition);
-                //console.log(distance);
-                if (!element.high_loaded && distance < element.highdistance && containslod) {
+        this.m_lodlist.forEach(function (lod) {
+            var i = 0;
+            console.log(lod);
+            lod.lodlevels.forEach(function (lodlevel) {
+                var distance = cameraposition.distanceTo(lod.lodposition);
+                var containslod = frustum.containsPoint(lod.lodposition);
+                console.log(distance);
+                if (!lodlevel.isloaded && distance < lodlevel.distance && containslod) {
                     //console.log(renderer.info);
-                    loader.load(element.high_layer, gltf => { element.high_level_instance_uuid = loadHidherresolution(gltf, element.lodinstance, element.highdistance); }, null, null);
-                    console.log("Adding high resolution");
+                    loader.load(lodlevel.glblayer, gltf => { lodlevel.instanceuuid = loadHidherresolution(gltf, lod.lodinstance, lodlevel.distance); }, null, null);
+                    console.log("Adding resolution" + i);
                     element.high_loaded = true;
-
-                } else if (element.high_loaded && (distance > element.highdistance)) {
-                    if (element.high_level_instance_uuid) {
-                        removemeshFromLod(element.lodinstance, null, element.highdistance);
-                        element.high_loaded = false;
-                        element.high_level_instance_uuid = null;
-                        element.lodinstance.update(camera);
+                } else if (lodlevel.isloaded && (distance > lodlevel.distance)) {
+                    if (lodlevel.instanceuuid) {
+                        removemeshFromLod(lod.lodinstance, null, lodlevel.distance);
+                        lodlevel.isloaded = false;
+                        lodlevel.instanceuuid = null;
+                        lod.lodinstance.update(camera);
                     }
                 }
-                if (!element.medium_loaded && distance < element.mediumdistance && containslod) {
-                    loader.load(element.medium_layer, gltf => { element.medium_level_instance_uuid = loadHidherresolution(gltf, element.lodinstance, element.mediumdistance); }, null, null);
-                    console.log("Adding medium resolution");
-                    element.medium_loaded = true;
-                } else if (element.medium_loaded && (distance > element.mediumdistance)) {
-                    //console.log(element.medium_level_instance_uuid);
-                    if (element.medium_level_instance_uuid) {
-                        removemeshFromLod(element.lodinstance, null, element.mediumdistance);
-                        element.medium_loaded = false;
-                        element.medium_level_instance_uuid = null;
-                        element.lodinstance.update(camera);
-                    }
-                }
-
-            }*/
+                i++;
+            });
         });
+
 
 
 
@@ -304,5 +296,5 @@ LOD.prototype.AddBaseLayer = function (base_layer, LOD_low_level_distance, mediu
         console.log(errorMessage);
     };
 
-    this.m_loader.load(base_layer, gltf => this.m_InitBaseLayer(gltf, LOD_low_level_distance, medium_layer, LOD_medium_level_distance, high_layer, LOD_high_level_distance), onProgress, onError);
+    this.m_loader.load(base_layer, gltf => this.m_InitBaseLayer(gltf, LOD_low_level_distance, 2, medium_layer, LOD_medium_level_distance, high_layer, LOD_high_level_distance), onProgress, onError);
 };
