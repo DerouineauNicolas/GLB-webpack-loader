@@ -104,7 +104,7 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
     loader.setDRACOLoader(dracoLoader);
     this.m_loader = loader;
 
-    this.m_InitBaseLayer = function (gltf, LOD_low_level_distance, LOD_level_medium, LOD_medium_level_distance, LOD_level_high, LOD_high_level_distance) {
+    this.m_InitBaseLayer = function (gltf, LOD_low_level_distance, num_higher_lods, ...higher_lods) {
         var boundingSphere;
 
         var lod = new THREE.LOD();
@@ -118,7 +118,8 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
 
         camera.position.z = LOD_low_level_distance;
 
-        lod.addLevel(mesh, LOD_medium_level_distance + 1);
+        //this part is a trick. We set the lowest lod distance switch to the (lowest - 1) lod distance + epsilon. This is useful when zooming out of the scene.
+        lod.addLevel(mesh, higher_lods[1] + 1);
 
         mesh.position.x = -boundingSphere.center.x;
         mesh.position.y = -boundingSphere.center.y;
@@ -131,9 +132,16 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
 
         this.m_scene.add(lod);
 
+        var lod_levels;
+
+        for (var i = 0; i < num_higher_lods; i++) {
+            lod_levels.push({
+                glblayer: higher_lods[(i / 2)], distance: higher_lods[(i / 2) + 1], isloaded: false, index: i
+            })
+        }
+
         this.m_lodlist.push({
-            lodinstance: lod, lodposition: lod_position, medium_layer: LOD_level_medium, mediumdistance: LOD_medium_level_distance, high_layer: LOD_level_high, highdistance: LOD_high_level_distance
-            , medium_loaded: false, high_loaded: false, high_level_instance_uuid: null, medium_level_instance_uuid: null
+            lodinstance: lod, lodposition: lod_position, lodlevels: lod_levels
         })
     };
 
@@ -157,7 +165,7 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
         this.m_lodlist.forEach(function (element) {
             //console.log(element.lodposition);
             //console.log(element);
-            if (1) {
+            /*if (1) {
                 var distance = cameraposition.distanceTo(element.lodposition);
                 var containslod = frustum.containsPoint(element.lodposition);
                 //console.log(distance);
@@ -189,7 +197,7 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
                     }
                 }
 
-            }
+            }*/
         });
 
 
