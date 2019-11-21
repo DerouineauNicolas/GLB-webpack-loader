@@ -105,6 +105,9 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
     this.m_loader = loader;
 
     this.m_InitBaseLayer = function (gltf, LOD_low_level_distance, num_higher_lods, ...higher_lods) {
+        console.log("m_InitBaseLayer");
+
+        console.log(higher_lods);
         var boundingSphere;
 
         var lod = new THREE.LOD();
@@ -134,16 +137,13 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
 
         var lod_levels = [];
 
-        console.log(higher_lods);
+        //console.log(higher_lods);
 
         for (var i = 0; i < num_higher_lods; i++) {
             lod_levels.push({
-                glblayer: higher_lods[(i / 2)], distance: higher_lods[(i / 2) + 1], isloaded: false, index: i, instanceuuid: null
+                glblayer: higher_lods[(i * 2)], distance: higher_lods[(i * 2) + 1], isloaded: false, index: i, instanceuuid: null
             })
         }
-
-        console.log("init lod_levels");
-        console.log(lod_levels);
 
         this.m_lodlist.push({
             lodinstance: lod, lodposition: lod_position, lodlevels: lod_levels
@@ -169,16 +169,13 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
 
         this.m_lodlist.forEach(function (lod) {
             var i = 0;
-            console.log(lod);
             lod.lodlevels.forEach(function (lodlevel) {
                 var distance = cameraposition.distanceTo(lod.lodposition);
                 var containslod = frustum.containsPoint(lod.lodposition);
-                console.log(distance);
                 if (!lodlevel.isloaded && distance < lodlevel.distance && containslod) {
-                    //console.log(renderer.info);
                     loader.load(lodlevel.glblayer, gltf => { lodlevel.instanceuuid = loadHidherresolution(gltf, lod.lodinstance, lodlevel.distance); }, null, null);
                     console.log("Adding resolution" + i);
-                    element.high_loaded = true;
+                    lodlevel.isloaded = true;
                 } else if (lodlevel.isloaded && (distance > lodlevel.distance)) {
                     if (lodlevel.instanceuuid) {
                         removemeshFromLod(lod.lodinstance, null, lodlevel.distance);
@@ -286,7 +283,7 @@ function loadAndMergeMesh(gltf) {
     return mesh;
 }
 
-LOD.prototype.AddBaseLayer = function (base_layer, LOD_low_level_distance, medium_layer, LOD_medium_level_distance, high_layer, LOD_high_level_distance) {
+LOD.prototype.AddBaseLayer = function (base_layer, LOD_low_level_distance, num_levels, medium_layer, LOD_medium_level_distance, high_layer, LOD_high_level_distance) {
     const onProgress = (xhr) => {
         console.log((xhr.loaded / xhr.total * 100) + '% loaded');
     };
@@ -296,5 +293,5 @@ LOD.prototype.AddBaseLayer = function (base_layer, LOD_low_level_distance, mediu
         console.log(errorMessage);
     };
 
-    this.m_loader.load(base_layer, gltf => this.m_InitBaseLayer(gltf, LOD_low_level_distance, 2, medium_layer, LOD_medium_level_distance, high_layer, LOD_high_level_distance), onProgress, onError);
+    this.m_loader.load(base_layer, gltf => this.m_InitBaseLayer(gltf, LOD_low_level_distance, num_levels, medium_layer, LOD_medium_level_distance, high_layer, LOD_high_level_distance), onProgress, onError);
 };
