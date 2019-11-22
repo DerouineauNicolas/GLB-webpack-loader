@@ -169,9 +169,9 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
 
         this.m_lodlist.forEach(function (lod) {
             var i = 0;
+            var distance = cameraposition.distanceTo(lod.lodposition);
+            var containslod = frustum.containsPoint(lod.lodposition);
             lod.lodlevels.forEach(function (lodlevel) {
-                var distance = cameraposition.distanceTo(lod.lodposition);
-                var containslod = frustum.containsPoint(lod.lodposition);
                 if (!lodlevel.isloaded && distance < lodlevel.distance && containslod) {
                     loader.load(lodlevel.glblayer, gltf => { lodlevel.instanceuuid = loadHidherresolution(gltf, lod.lodinstance, lodlevel.distance); }, null, null);
                     console.log("Adding resolution" + i);
