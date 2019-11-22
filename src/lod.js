@@ -105,9 +105,6 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
     this.m_loader = loader;
 
     this.m_InitBaseLayer = function (gltf, LOD_low_level_distance, num_higher_lods, ...higher_lods) {
-        console.log("m_InitBaseLayer");
-
-        console.log(higher_lods);
         var boundingSphere;
 
         var lod = new THREE.LOD();
@@ -283,7 +280,7 @@ function loadAndMergeMesh(gltf) {
     return mesh;
 }
 
-LOD.prototype.AddBaseLayer = function (base_layer, LOD_low_level_distance, num_levels, medium_layer, LOD_medium_level_distance, high_layer, LOD_high_level_distance) {
+LOD.prototype.AddBaseLayer = function (base_layer, LOD_low_level_distance, num_levels, ...higher_lods) {
     const onProgress = (xhr) => {
         console.log((xhr.loaded / xhr.total * 100) + '% loaded');
     };
@@ -293,5 +290,5 @@ LOD.prototype.AddBaseLayer = function (base_layer, LOD_low_level_distance, num_l
         console.log(errorMessage);
     };
 
-    this.m_loader.load(base_layer, gltf => this.m_InitBaseLayer(gltf, LOD_low_level_distance, num_levels, medium_layer, LOD_medium_level_distance, high_layer, LOD_high_level_distance), onProgress, onError);
+    this.m_loader.load(base_layer, gltf => this.m_InitBaseLayer(gltf, LOD_low_level_distance, num_levels, ...higher_lods), onProgress, onError);
 };
