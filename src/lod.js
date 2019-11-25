@@ -186,8 +186,6 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
         });
 
 
-
-
         if (this.m_params.enableRaytracing) {
 
             mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -229,14 +227,14 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
         this.m_renderer.domElement.addEventListener('mousedown', function (event) {
             //clicked(event);
             context.monitorDistance();
-            camera.updateMatrixWorld();
+            //camera.updateMatrixWorld();
         });
 
         this.m_renderer.domElement.addEventListener('wheel', function (event) {
             //console.log("scroll event")
             context.monitorDistance();
             //console.log(this);
-            camera.updateMatrixWorld();
+            //camera.updateMatrixWorld();
         });
 
     }
