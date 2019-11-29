@@ -14,7 +14,7 @@ function loadHidherresolution(gltf, lod, level) {
 }
 
 function removemeshFromLod(lod, mesh, distance) {
-    console.log("removemeshFromLod");
+    //console.log("removemeshFromLod");
     if (lod.levels.length > 1) {
         var object = lod.getObjectForDistance(distance);
         //lod.remove(object);
@@ -96,10 +96,10 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
     // Optional: Provide a DRACOLoader instance to decode compressed mesh data
     // Configure and create Draco decoder.
     var dracoLoader = new DRACOLoader();
-    console.log(dracoLoader);
+    //console.log(dracoLoader);
     //dracoLoader.setDecoderPath('.');
     //dracoLoader.setDecoderConfig({ type: 'wasm' });
-    console.log(dracoLoader);
+    //console.log(dracoLoader);
 
     loader.setDRACOLoader(dracoLoader);
     this.m_loader = loader;
@@ -171,7 +171,6 @@ export default function LOD(scene, camera, renderer, params, mouse, loader) {
             lod.lodlevels.forEach(function (lodlevel) {
                 if (!lodlevel.isloaded && distance < lodlevel.distance && containslod) {
                     loader.load(lodlevel.glblayer, gltf => { lodlevel.instanceuuid = loadHidherresolution(gltf, lod.lodinstance, lodlevel.distance); }, null, null);
-                    console.log("Adding resolution" + i);
                     lodlevel.isloaded = true;
                 } else if (lodlevel.isloaded && (distance > lodlevel.distance)) {
                     if (lodlevel.instanceuuid) {
