@@ -12,9 +12,10 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 var controls = new OrbitControls(camera, renderer.domElement);
+controls.maxDistance = 80;
 
-camera.position.z = 2;
-camera.position.y = 500;
+camera.position.z = -38;
+camera.position.y = 14;
 controls.update();
 
 // Instantiate a loader
@@ -26,7 +27,7 @@ var clock = new THREE.Clock();
 // Load a glTF resource
 loader.load(
     // resource URL
-    'PlanetarySystem.glb',
+    'Nicolas.glb',
     // called when the resource is loaded
     function (gltf) {
         var model = gltf.scene;
@@ -65,9 +66,8 @@ loader.load(
     }
 );
 
-var pointLight = new THREE.PointLight(0xffffff, 1, 10000000);
-pointLight.position.set(0, 0, 0);
-scene.add(pointLight);
+var light = new THREE.AmbientLight(0x404040);
+scene.add(light);
 
 
 var animate = function () {
