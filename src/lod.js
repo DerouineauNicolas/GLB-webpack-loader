@@ -37,7 +37,9 @@ function deleteobj(object) {
         else
             material = obj.material;
         if (material) {
-            material.dispose();
+            if (material.dispose) {
+                material.dispose();
+            }
             if (material.map) {
                 material.map.dispose();
             }
