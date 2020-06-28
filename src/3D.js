@@ -69,7 +69,7 @@ export function LoadAsset(asset) {
 
 	var controls = new OrbitControls( camera, renderer.domElement );
 
-	camera.position.z = 2;
+	//camera.position.z = 2;
 	controls.update();
 
 	// Instantiate a loader
@@ -100,6 +100,7 @@ export function LoadAsset(asset) {
 				mixer.clipAction(gltf.animations[0]).play();
 				animate();
 			}
+			fitCameraToObject(camera, model, 20, controls);
 			
 
 		},
@@ -113,6 +114,7 @@ export function LoadAsset(asset) {
 		function ( error ) {
 
 			console.log( 'An error happened' );
+			console.log(error);
 
 		}
 	);
