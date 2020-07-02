@@ -48,35 +48,55 @@ const fitCameraToObject = function ( camera, object, offset, controls ) {
    }
 }
 
-export function LoadAsset(asset) {
 
-	var scene = new THREE.Scene();
-	var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
-	var drawingSurface = document.getElementById( 'canvasviewer' );
-	var renderer = new THREE.WebGLRenderer();
+export default function SceneManager (){
+	this.scene = new THREE.Scene();
+	this.camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+	this.drawingSurface = document.getElementById( 'canvasviewer' );
+	this.renderer = new THREE.WebGLRenderer();
 
     var width = Math.floor( $('#canvasviewer').width() );
 	var height = Math.floor( $('#canvasviewer').height() );
 
-	console.log(width);
-	console.log(height);
-	
-    renderer.setSize(width, height);
-    drawingSurface.appendChild(renderer.domElement);
+    this.renderer.setSize(width, height);
+    this.drawingSurface.appendChild(this.renderer.domElement);
 
-	renderer.gammaOutput = true;
-	renderer.gammaFactor = 2.2;
+	this.renderer.gammaOutput = true;
+	this.renderer.gammaFactor = 2.2;
 
-	var controls = new OrbitControls( camera, renderer.domElement );
+	this.controls = new OrbitControls( this.camera, this.renderer.domElement );
 
-	//camera.position.z = 2;
-	controls.update();
+	this.controls.update();
+
+
+	this.mixer = null;
+	var clock = new THREE.Clock();
+	var pointLight = new THREE.PointLight(0xffffff, 1, 100);
+	pointLight.position.set(-5, 1, 5);
+	this.scene.add(pointLight);
+
+	var animate = function (renderer, scene, camera, mixer) {
+		requestAnimationFrame(function(){ animate(renderer, scene, camera, mixer); });
+		
+		var delta = clock.getDelta();
+		if (mixer != null) {
+			mixer.update(delta);
+		};
+		//console.log(renderer);
+		renderer.render(scene, camera);
+	};
+
+	console.log(this.renderer);
+
+	animate(this.renderer, this.scene, this.camera, this.mixer);
+}
+
+SceneManager.prototype.LoadAsset = function LoadAsset(asset) {
 
 	// Instantiate a loader
 	var loader = new GLTFLoader();
-	var mixer = null;
-	var clock = new THREE.Clock();
-
+	var threeDContext = this;
+	console.log(threeDContext);
 
 	// Load a glTF resource
 	loader.load(
@@ -86,7 +106,7 @@ export function LoadAsset(asset) {
 		function ( gltf ) {
 			var model = gltf.scene;
 
-			scene.add(model );
+			threeDContext.scene.add(model );
 
 			gltf.animations; // Array<THREE.AnimationClip>
 			gltf.scene; // THREE.Scene
@@ -95,12 +115,12 @@ export function LoadAsset(asset) {
 			gltf.asset; // Object
 			
 
-			mixer = new THREE.AnimationMixer(model);
+			threeDContext.mixer = new THREE.AnimationMixer(model);
 			if(gltf.animations[0]){
-				mixer.clipAction(gltf.animations[0]).play();
-				animate();
+				threeDContext.mixer.clipAction(gltf.animations[0]).play();
+				//animate();
 			}
-			fitCameraToObject(camera, model, 20, controls);
+			fitCameraToObject(threeDContext.camera, model, 20, threeDContext.controls);
 			
 
 		},
@@ -118,20 +138,9 @@ export function LoadAsset(asset) {
 
 		}
 	);
-
-	var pointLight = new THREE.PointLight(0xffffff, 1, 100);
-	pointLight.position.set(-5, 1, 5);
-	scene.add(pointLight);
-
-
-	var animate = function () {
-		requestAnimationFrame( animate );
-		var delta = clock.getDelta();
-		if (mixer != null) {
-			mixer.update(delta);
-		};
-		renderer.render(scene, camera);
-	};
-
-	animate();
+	
 }
+
+
+
+
