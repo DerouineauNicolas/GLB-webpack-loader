@@ -50,10 +50,13 @@ const fitCameraToObject = function ( camera, object, offset, controls ) {
 
 
 export default function SceneManager (){
-	this.scene = new THREE.Scene();
-	this.camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+	var scene = new THREE.Scene();
+	this.scene = scene;
+	var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+	this.camera = camera;
 	this.drawingSurface = document.getElementById( 'canvasviewer' );
-	this.renderer = new THREE.WebGLRenderer();
+	var renderer = new THREE.WebGLRenderer();
+	this.renderer = renderer;
 
     var width = Math.floor( $('#canvasviewer').width() );
 	var height = Math.floor( $('#canvasviewer').height() );
@@ -67,6 +70,7 @@ export default function SceneManager (){
 	this.controls = new OrbitControls( this.camera, this.renderer.domElement );
 
 	this.controls.update();
+	var context = this;
 
 
 	this.mixer = null;
@@ -75,20 +79,18 @@ export default function SceneManager (){
 	pointLight.position.set(-5, 1, 5);
 	this.scene.add(pointLight);
 
-	var animate = function (renderer, scene, camera, mixer) {
-		requestAnimationFrame(function(){ animate(renderer, scene, camera, mixer); });
-		
+	function animate() {
+		requestAnimationFrame( animate );
 		var delta = clock.getDelta();
-		if (mixer != null) {
-			mixer.update(delta);
+		if (context.mixer != null) {
+			context.mixer.update(delta);
 		};
-		//console.log(renderer);
-		renderer.render(scene, camera);
-	};
+		renderer.render( scene, camera );
+	}
+	animate();
 
-	console.log(this.renderer);
+	this.animate = animate;
 
-	animate(this.renderer, this.scene, this.camera, this.mixer);
 }
 
 SceneManager.prototype.LoadAsset = function LoadAsset(asset) {
@@ -101,7 +103,7 @@ SceneManager.prototype.LoadAsset = function LoadAsset(asset) {
 	// Load a glTF resource
 	loader.load(
 		// resource URL
-		'Nicolasd.glb',
+		asset,
 		// called when the resource is loaded
 		function ( gltf ) {
 			var model = gltf.scene;
@@ -118,11 +120,9 @@ SceneManager.prototype.LoadAsset = function LoadAsset(asset) {
 			threeDContext.mixer = new THREE.AnimationMixer(model);
 			if(gltf.animations[0]){
 				threeDContext.mixer.clipAction(gltf.animations[0]).play();
-				//animate();
+				threeDContext.animate();
 			}
 			fitCameraToObject(threeDContext.camera, model, 20, threeDContext.controls);
-			
-
 		},
 		// called while loading is progressing
 		function ( xhr ) {
